@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>CorpCarpooling</artifactId>
+    <artifactId>carService</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>CorpCarpooling</name>
-    <description>CorpCarpooling</description>
+    <name>carService</name>
+    <description>carService</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
-            <version>1.5.7</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
