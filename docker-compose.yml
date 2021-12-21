@@ -1,33 +1,58 @@
 version: '3.3'
 services:
-  mariadbservice:
-    image: mariadbservice:latest
+  mariadb:
+    image: mariadb:latest
     ports:
-       - 3306:3306
+      - "3306:3306"
     environment:
-      MYSQL_ROOT_USER: user
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootPassword
+      MYSQL_DATABASE: carpooldb
+      MYSQL_USER: appUser
+      MYSQL_PASSWORD: appPassword
 
-  bookingservice:
-    image: bookingservice
+  mariadbservice:
+    image: mariadbservice
+    build: .
     restart: always
     ports:
-      - 8080:8080
-    links:
-      - mariadb
+       - "8006:8006"
+    depends_on:
+       - mariadb
+    environment:
+      MYSQL_DATABASE: carpooldb
+      MYSQL_USER: appUser
+      MYSQL_PASSWORD: appPassword
+      HOST: mariadb
 
-  carservice:
-    image: carservice
-    restart: always
-    ports:
-      - 8081:8081
-    links:
-      - mariadb
-
-  userservice:
-    image: userservice
-    restart: always
-    ports:
-      - 8084:8084
-    links:
-      - mariadb
+#  bookingservice:
+#    image: bookingservice
+#    build: .
+#    restart: always
+#    ports:
+#      - "8082:8082"
+#    depends_on:
+#      - mariadbservice
+#    environment:
+#      MARIADBSERVICE_HOST: mariadbservice
+#
+#  carservice:
+#    image: carservice
+#    build: .
+#    restart: always
+#    ports:
+#      - "8081:8081"
+#    depends_on:
+#      - mariadbservice
+#    environment:
+#      MARIADBSERVICE_HOST: mariadbservice
+#
+#  userservice:
+#    image: userservice
+#    build: .
+#    restart: always
+#    ports:
+#      - "8084:8084"
+#    depends_on:
+#      - mariadbservice
+#    environment:
+#      MARIADBSERVICE_HOST: mariadbservice
