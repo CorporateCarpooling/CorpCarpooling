@@ -1,4 +1,5 @@
 package com.example.userservice.controller;
 
-public class User {
+public class UserController {
+
 }
