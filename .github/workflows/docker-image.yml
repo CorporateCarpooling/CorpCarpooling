@@ -38,17 +38,17 @@ jobs:
           push: true
           tags: sanajava/userservice:${{ github.run_number }}
 
-      - name: Build and Push carService
+      - name: Build and Push carservice
         uses: docker/build-push-action@v2
         with:
-          context: ./carService
+          context: ./carservice
           push: true
           tags: sanajava/carservice:${{ github.run_number }}
 
-      - name: Build and Push bookingService
+      - name: Build and Push bookingservice
         uses: docker/build-push-action@v2
         with:
-          context: ./bookingService
+          context: ./bookingservice
           push: true
           tags: sanajava/bookingservice:${{ github.run_number }}
 

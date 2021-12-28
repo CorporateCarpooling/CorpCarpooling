@@ -17,8 +17,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>bookingService</module>
-        <module>carService</module>
+        <module>bookingservice</module>
+        <module>carservice</module>
         <module>mariadbservice</module>
         <module>userservice</module>
     </modules>

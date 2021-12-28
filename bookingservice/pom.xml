@@ -9,10 +9,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>carService</artifactId>
+    <artifactId>bookingservice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>carService</name>
-    <description>carService</description>
+    <name>bookingservice</name>
+    <description>bookingservice</description>
     <properties>
         <java.version>11</java.version>
     </properties>
