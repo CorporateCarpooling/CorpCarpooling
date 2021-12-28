@@ -31,12 +31,33 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push
+      - name: Build and Push userservice
         uses: docker/build-push-action@v2
         with:
           context: ./userservice
           push: true
           tags: sanajava/userservice:${{ github.run_number }}
+
+      - name: Build and Push carService
+        uses: docker/build-push-action@v2
+        with:
+          context: ./carService
+          push: true
+          tags: sanajava/carservice:${{ github.run_number }}
+
+      - name: Build and Push bookingService
+        uses: docker/build-push-action@v2
+        with:
+          context: ./bookingService
+          push: true
+          tags: sanajava/bookingservice:${{ github.run_number }}
+
+      - name: Build and Push mariadbservice
+        uses: docker/build-push-action@v2
+        with:
+          context: ./mariadbservice
+          push: true
+          tags: sanajava/mariadbservice:${{ github.run_number }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
