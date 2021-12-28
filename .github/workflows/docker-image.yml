@@ -31,7 +31,7 @@ jobs:
       - name: Build and Push
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./userservice
           push: true
           tags: sanajava/userservice:${{ github.run_number }}
 
