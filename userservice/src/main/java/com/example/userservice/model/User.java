@@ -1,5 +1,6 @@
 package com.example.userservice.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 
@@ -8,10 +9,14 @@ import lombok.Data;
 //import javax.persistence.Id;
 
 @Data
+
 //@Entity
 public class User {
 //  @Id
 //  @GeneratedValue
-  private int id;
+  private Long id;
   private String name;
+  private String email;
+  private String userName;
+  private String password;
 }
