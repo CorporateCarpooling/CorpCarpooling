@@ -10,5 +10,7 @@ public interface UserMapper {
     //UserMapper Instance = Mappers.getMapper(UserMapper.class);
     UserEntity toEntity(User user);
     User toUser(UserRequest userRequest);
+
+    User toUser(UserEntity userEntity);
     //User toUser(UserEntity savedEntity);
 }

@@ -22,4 +22,10 @@ public class UserService {
         var userEntity= userMapper.toEntity(user);
         return userRepository.save(userEntity).getId();
     }
+
+    public User getUserByEmail(String userEmail) {
+      //  User user= userMapper.toUser(userEmail);
+        return userMapper.toUser(userRepository.findByEmail(userEmail));
+    }
+
 }

@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 public class UserService {
 
     private Environment environment;
+   // private webClient.Builder webClientBuilder;
 
     public void registerCustomer(User user) {
 
@@ -42,6 +43,10 @@ public class UserService {
 
         } else {
             //User fanns redan
+            throw new RuntimeException("User already Exist");
         }
+
     }
+
+
 }
