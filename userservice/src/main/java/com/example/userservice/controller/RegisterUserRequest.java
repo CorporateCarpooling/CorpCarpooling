@@ -10,6 +10,5 @@ public class RegisterUserRequest {
     private String name;
     @Email
     private String email;
-    private String userName;
     private String password;
 }
