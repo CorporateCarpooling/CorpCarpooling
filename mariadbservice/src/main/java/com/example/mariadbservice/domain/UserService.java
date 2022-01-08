@@ -2,7 +2,7 @@ package com.example.mariadbservice.domain;
 
 import com.example.mariadbservice.entity.UserEntity;
 import com.example.mariadbservice.mappers.UserMapper;
-import com.example.mariadbservice.model.User;
+import com.example.model.User;
 import com.example.mariadbservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

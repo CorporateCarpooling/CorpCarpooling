@@ -1,52 +1,37 @@
 package com.example.userservice.domain;
 
+import com.example.model.Role;
+import com.example.model.User;
+import com.example.userservice.clientapi.DataApi;
 import com.example.userservice.controller.RegisterUserRequest;
-import com.example.userservice.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class UserService {
 
     private Environment environment;
+    private DataApi dataApi;
    // private webClient.Builder webClientBuilder;
 
     public void registerCustomer(User user) {
 
-        // https://dzone.com/articles/resttemplate-vs-webclient
-        // Tror man bör försöka använda webClient för att prata med mariadbService container.
-        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+        Optional<User> userInDatabase = dataApi.getUserByEmail(user.getEmail());
 
-        //Kolla om användaren redan finns.
-        Mono<User> userInDatabase = webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/user")
-                        .queryParam("email", user.getEmail())
-                        .build())
-                .retrieve()
-                .bodyToMono(User.class);
-
-        //Post if no user exist
-        if (userInDatabase.block() == null) {
-            Mono<String> postResponse = webClient.post()
-                    .uri(uriBuilder -> uriBuilder
-                            .path("/user")
-                            .build())
-                    .bodyValue(user)
-                    .retrieve()
-                    .bodyToMono(String.class);
-            String response = postResponse.block();
-
-        } else {
-            //User fanns redan
+        if(userInDatabase.isPresent()) {
             throw new RuntimeException("User already Exist");
+        } else {
+            user.setRoles(List.of(Role.USER));
+            dataApi.postUser(user);
         }
 
     }
-
 
 }

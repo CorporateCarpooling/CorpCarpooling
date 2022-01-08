@@ -4,13 +4,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.lang.annotation.Retention;
+import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
+@Table(name = "user")
 public class UserEntity {
      @Id
      @GeneratedValue
@@ -18,4 +19,6 @@ public class UserEntity {
      private String name;
      private String email;
      private String password;
+     @ManyToMany(fetch = FetchType.EAGER)
+     private List<RoleEntity> roles;
 }
