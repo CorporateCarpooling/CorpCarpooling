@@ -1,7 +1,6 @@
-package com.example.userservice.model;
+package com.example.mariadbservice.model;
 
 import lombok.Data;
-
 
 @Data
 public class User {
