@@ -40,7 +40,7 @@ public class UserController {
         return ResponseEntity.ok("User Registered.");
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping("/user/login")
     public ResponseEntity<?> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
         final Authentication authentication = authenticationManager.authenticate(
@@ -54,5 +54,10 @@ public class UserController {
         return ResponseEntity.ok(new AuthToken(token));
     }
 
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/user/ping")
+    public ResponseEntity<String> ping(){
+        return ResponseEntity.ok("pong");
+    }
 
 }

@@ -40,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
                email = jwtTokenUtil.getEmailFromToken(authToken);
             } catch (IllegalArgumentException e) {
-                logger.error("An error occurred while fetching Email from Token", e);
+                logger.error("An error occurred during getting email from token", e);
             } catch (ExpiredJwtException e) {
                 logger.warn("The token has expired", e);
             } catch(SignatureException e){
