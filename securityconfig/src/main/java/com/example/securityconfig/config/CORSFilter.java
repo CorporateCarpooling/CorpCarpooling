@@ -1,4 +1,4 @@
-package com.example.userservice.config;
+package com.example.securityconfig.config;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;

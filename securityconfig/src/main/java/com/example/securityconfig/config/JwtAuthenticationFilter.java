@@ -1,4 +1,4 @@
-package com.example.userservice.config;
+package com.example.securityconfig.config;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
@@ -25,7 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Value("${jwt.token.prefix}")
     public String TOKEN_PREFIX;
 
-    @Resource(name = "dataApi")
+    @Resource(name = "securityApi")
     private UserDetailsService userDetailsService;
     @Autowired
     private TokenProvider jwtTokenUtil;

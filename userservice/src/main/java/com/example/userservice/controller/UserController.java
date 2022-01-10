@@ -1,14 +1,13 @@
 package com.example.userservice.controller;
 
-import com.example.userservice.config.TokenProvider;
-import com.example.userservice.domain.AuthToken;
-import com.example.userservice.domain.LoginUser;
+import com.example.model.User;
+import com.example.securityconfig.config.TokenProvider;
 import com.example.userservice.domain.UserService;
 import com.example.userservice.mappers.UserMapper;
-import com.example.model.User;
+import com.example.userservice.model.AuthToken;
+import com.example.userservice.model.LoginUser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,7 +15,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 

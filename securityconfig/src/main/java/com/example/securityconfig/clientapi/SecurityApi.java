@@ -1,4 +1,4 @@
-package com.example.userservice.clientapi;
+package com.example.securityconfig.clientapi;
 
 import com.example.model.User;
 import lombok.AllArgsConstructor;
@@ -17,11 +17,11 @@ import java.util.Set;
 
 @AllArgsConstructor
 @Service
-public class DataApi /*implements UserDetailsService*/ {
+public class SecurityApi implements UserDetailsService {
 
     private Environment environment;
 
-    public Optional<User> getUserByEmail(String email) {
+    private Optional<User> getUserByEmail(String email) {
         // https://dzone.com/articles/resttemplate-vs-webclient
         // Tror man bör försöka använda webClient för att prata med mariadbService container.
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
@@ -37,20 +37,7 @@ public class DataApi /*implements UserDetailsService*/ {
         return Optional.ofNullable(userInDatabase.block());
     }
 
-    public void postUser(User user) {
-        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
-
-        Mono<String> postResponse = webClient.post()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/user")
-                        .build())
-                .bodyValue(user)
-                .retrieve()
-                .bodyToMono(String.class);
-        String response = postResponse.block();
-    }
-
-    /*@Override
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> optionalUser = getUserByEmail(username);
         if(optionalUser.isEmpty()){
@@ -65,5 +52,5 @@ public class DataApi /*implements UserDetailsService*/ {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
         });
         return authorities;
-    }*/
+    }
 }

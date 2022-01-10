@@ -1,4 +1,4 @@
-package com.example.userservice.config;
+package com.example.securityconfig.config;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.TextCodec;

@@ -17,7 +17,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserService {
 
-    private Environment environment;
+//    private Environment environment;
     private DataApi dataApi;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -31,6 +31,7 @@ public class UserService {
             throw new RuntimeException("User already Exist");
         } else {
             user.setRoles(List.of(Role.USER));
+//            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             dataApi.postUser(user);
         }

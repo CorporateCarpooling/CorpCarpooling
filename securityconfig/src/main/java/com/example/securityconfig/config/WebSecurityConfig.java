@@ -1,6 +1,6 @@
-package com.example.userservice.config;
+package com.example.securityconfig.config;
 
-import io.netty.handler.codec.http.HttpMethod;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Resource(name = "dataApi")
+    @Resource(name = "securityApi")
     private UserDetailsService userDetailsService;
 
     public UnauthorizedEntryPoint unauthorizedEntryPoint;
