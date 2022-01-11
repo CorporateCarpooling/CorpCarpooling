@@ -1,11 +1,11 @@
-package com.example.userservice.model;
+package com.example.userservice.controller;
 
+import com.example.userservice.model.CarBrand;
+import com.example.userservice.model.YearModel;
 import lombok.Data;
 
 @Data
-public class Car {
-
-    private Long id;
+public class RegisterCarRequest {
     private CarBrand carBrand;
     private String registrationNumber;
     private YearModel yearModel;
