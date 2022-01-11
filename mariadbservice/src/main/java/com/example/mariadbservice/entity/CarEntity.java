@@ -3,12 +3,11 @@ package com.example.mariadbservice.entity;
 import com.example.mariadbservice.model.FuelType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "Car")
 @Data
 @NoArgsConstructor
 public class CarEntity {
@@ -16,15 +15,12 @@ public class CarEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "carbrandid", referencedColumnName = "id", insertable = false, updatable = false)
-//    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
     private CarBrandEntity carBrand;
 
     private String registrationNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "yearmodelid", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
     private YearModelEntity yearModel;
 
     @Enumerated(EnumType.STRING)

@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface YearModelRepository extends JpaRepository<YearModelEntity, Long> {
     YearModelEntity findByYearModel(String yearModel);
+
 }

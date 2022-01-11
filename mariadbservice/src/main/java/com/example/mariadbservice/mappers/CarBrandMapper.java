@@ -1,6 +1,5 @@
 package com.example.mariadbservice.mappers;
 
-import com.example.mariadbservice.controller.CarBrandRequest;
 import com.example.mariadbservice.entity.CarBrandEntity;
 import com.example.mariadbservice.model.CarBrand;
 import org.mapstruct.Mapper;
@@ -15,8 +14,6 @@ public interface CarBrandMapper {
     @Mapping(target = "id", source = "carBrand.id")
     @Mapping(target = "brandName", source = "carBrand.brandName")
     CarBrandEntity carBrandToCarBrandDto(CarBrand carBrand);
-
-    CarBrand dtoToCarBrand(CarBrandRequest carBrandRequest);
 
     CarBrand dtoToCarBrand(CarBrandEntity carBrandEntity);
 }

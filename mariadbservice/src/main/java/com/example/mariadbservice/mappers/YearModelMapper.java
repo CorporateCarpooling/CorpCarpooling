@@ -1,7 +1,6 @@
 
 package com.example.mariadbservice.mappers;
 
-import com.example.mariadbservice.controller.YearModelRequest;
 import com.example.mariadbservice.entity.YearModelEntity;
 import com.example.mariadbservice.model.YearModel;
 import org.mapstruct.Mapper;
@@ -15,7 +14,5 @@ public interface YearModelMapper {
     YearModelEntity yearModelToYearModelEntity(YearModel yearModel);
 
     YearModel entityToYearModel(YearModelEntity carBrandEntity);
-
-    YearModel entityToYearModel(YearModelRequest yearModelRequest);
 
 }
