@@ -35,25 +35,9 @@ public class CarService {
 
         carEntity.setCarBrand(carBrandEntity);
         carEntity.setYearModel(yearModelEntity);
-        System.out.println("in service class");
-        return carRepository.save(carEntity).getId();
-    }
-/*
-    public Long createCar(Car car) {
-        var carEntity = carMapper.carToCarDto(car);
-        System.out.println("in service class");
         return carRepository.save(carEntity).getId();
     }
 
- */
-/*
-    public List<Car> findAll() {
-
-        return carRepository.findAll();
-    }
-
-
- */
  /*
     public void registerCar(CarRegistrationRequest request) {
         // change to mapper

@@ -23,19 +23,5 @@ public class CarController {
         return ResponseEntity.ok("Car registered");
     }
 
-    /*
-    @PostMapping
-    public void registerCar(@RequestBody CarRegistrationRequest carRegistrationRequest) {
-        log.info("new car registration {}", carRegistrationRequest);
-        carService.registerCar(carRegistrationRequest);
-    }
 
-     */
-
-    /*
-        @GetMapping("/all")
-        public ResponseEntity<List<CarEntity>> findAll() {
-            return ResponseEntity.ok(carMapper.toCarDTOs(carService.findAll()));
-        }
-    */
 }
