@@ -2,7 +2,7 @@ package com.example.userservice.controller;
 
 import com.example.userservice.domain.UserService;
 import com.example.userservice.mappers.UserMapperImpl;
-import com.example.userservice.model.User;
+import com.example.model.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

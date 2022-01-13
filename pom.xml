@@ -21,6 +21,8 @@
         <module>carservice</module>
         <module>mariadbservice</module>
         <module>userservice</module>
+        <module>models</module>
+        <module>securityconfig</module>
     </modules>
 
     <properties>

@@ -2,7 +2,7 @@ package com.example.mariadbservice.controller;
 
 import com.example.mariadbservice.domain.UserService;
 import com.example.mariadbservice.mappers.UserMapper;
-import com.example.mariadbservice.model.User;
+import com.example.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
