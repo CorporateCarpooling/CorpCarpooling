@@ -1,6 +1,5 @@
-package com.example.userservice.config;
+package com.example.bookingservice.config;
 
-import com.example.securityconfig.config.TokenProvider;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
