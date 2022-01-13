@@ -2,12 +2,15 @@ package com.example.mariadbservice.domain;
 
 
 import com.example.mariadbservice.entity.CarBrandEntity;
+import com.example.mariadbservice.entity.CarEntity;
+import com.example.mariadbservice.entity.UserEntity;
 import com.example.mariadbservice.entity.YearModelEntity;
 import com.example.mariadbservice.mappers.CarMapper;
 import com.example.mariadbservice.model.Car;
 import com.example.mariadbservice.repository.CarBrandRepository;
 import com.example.mariadbservice.repository.CarRepository;
 import com.example.mariadbservice.repository.YearModelRepository;
+import com.example.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +39,12 @@ public class CarService {
         carEntity.setCarBrand(carBrandEntity);
         carEntity.setYearModel(yearModelEntity);
         return carRepository.save(carEntity).getId();
+    }
+
+    public Car getCarByRegistrationNumber(String registrationNumber) {
+        CarEntity carEntity = carRepository.findByRegistrationNumber(registrationNumber);
+        Car car = carMapper.dtoToCar(carEntity);
+        return car;
     }
 
  /*

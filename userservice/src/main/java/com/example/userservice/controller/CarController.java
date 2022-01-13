@@ -10,19 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
 @Slf4j
 @AllArgsConstructor
-@NoArgsConstructor
-
 @RestController
-@RequestMapping("/car")
 public class CarController {
 
-    private CarService carService;
-    private CarMapper carMapper;
+    private final CarService carService;
+    private final CarMapper carMapper;
 
-    @PostMapping ("/register")
+    @PostMapping ("/car/register")
     public ResponseEntity<String> registerCar(@RequestBody RegisterCarRequest registerCarRequest) {
  //       log.info("Car registration{}", registerCarRequest);
         Car car= carMapper.dtoToCar(registerCarRequest);
