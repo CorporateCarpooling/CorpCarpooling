@@ -27,6 +27,11 @@ public class CarController {
        Car car = carService.getCarByRegistrationNumber(registrationNumber);
         return ResponseEntity.ok(car);
     }
+    @PutMapping("car/update/{regnumber}")
+        public ResponseEntity<Car> updateCar(@PathVariable("regnumber") String registrationNumber, @RequestBody CarRequest carRequest) {
+        Car car = carService.getCarByRegistrationNumber(registrationNumber);
+        return ResponseEntity.ok(car);
+    }
 
 
 }

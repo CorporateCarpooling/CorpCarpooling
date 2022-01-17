@@ -44,5 +44,44 @@ public class CarService {
         return car;
     }
 
+    public String updateCar(String registrationNumber, Car car) {
+        var carEntity = carMapper.carToCarDto(car);
+        CarEntity carEntityFromDb = carRepository.findByRegistrationNumber(registrationNumber);
+        System.out.println(carEntityFromDb.toString());
+        CarBrandEntity carBrandEntity = carBrandRepository.findByBrandName(carEntity.getCarBrand().getBrandName());
+        if (carEntity.getCarBrand().equals(carBrandEntity)) {
+            carEntityFromDb.setCarBrand(carEntity.getCarBrand());
+        } else {
+            carBrandEntity = carBrandRepository.save(carEntity.getCarBrand());
+            carEntityFromDb.setCarBrand(carEntity.getCarBrand());
+
+        }
+//        carEntityFromDb.setYearModel(carEntity.getYearModel());
+        carEntityFromDb.setAvailableSeats(carEntity.getAvailableSeats());
+        carEntityFromDb.setFuelType(carEntity.getFuelType());
+        carEntityFromDb.setPrice(carEntity.getPrice());
+
+        return carRepository.save(carEntityFromDb).toString();;
+    }
+
+
+/*
+    @PutMapping("/tutorials/{id}")
+    public ResponseEntity<Tutorial> updateTutorial(@PathVariable("id") long id, @RequestBody Tutorial tutorial) {
+        Optional<Tutorial> tutorialData = tutorialRepository.findById(id);
+
+        if (tutorialData.isPresent()) {
+            Tutorial _tutorial = tutorialData.get();
+            _tutorial.setTitle(tutorial.getTitle());
+            _tutorial.setDescription(tutorial.getDescription());
+            _tutorial.setPublished(tutorial.isPublished());
+            return new ResponseEntity<>(tutorialRepository.save(_tutorial), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+ */
+
 }
 
