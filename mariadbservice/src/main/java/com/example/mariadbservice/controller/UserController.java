@@ -16,14 +16,15 @@ public class UserController {
     private final UserMapper userMapper;
 
     @PostMapping("user")
-    public ResponseEntity<String> postUser(@RequestBody UserRequest userRequest){
+    public ResponseEntity<String> postUser(@RequestBody UserRequest userRequest) {
         User user = userMapper.toUser(userRequest);
         Long id = userService.create(user);
         return new ResponseEntity<>(Long.toString(id), HttpStatus.OK);
     }
+
     @GetMapping("user")
-    public ResponseEntity<User> getUser(@RequestParam String email){
-        User user= userService.getUserByEmail(email);
+    public ResponseEntity<User> getUser(@RequestParam String email) {
+        User user = userService.getUserByEmail(email);
         return ResponseEntity.ok(user);
     }
 }
