@@ -1,10 +1,13 @@
 package com.example.mariadbservice.domain;
 
-import com.example.mariadbservice.model.User;
+import com.example.model.Role;
+import com.example.model.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,6 +25,8 @@ class TestUserService {
         user.setEmail("my@mail.com");
         user.setName("my Name");
         user.setPassword("password");
+        user.setRoles(new ArrayList<Role>());
+        user.getRoles().add(Role.USER);
 
         //When
         var result= underTest.create(user);
@@ -32,6 +37,7 @@ class TestUserService {
         assertEquals("my Name", userEntity.getName());
         assertEquals("my@mail.com", userEntity.getEmail());
         assertEquals("password", userEntity.getPassword());
+        assertEquals(Role.USER,userEntity.getRoles().get(0));
     }
 
 }
