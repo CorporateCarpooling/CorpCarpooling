@@ -23,4 +23,16 @@ public class CarController {
         return ResponseEntity.ok("Car registered");
     }
 
+    @PutMapping("/car/update")
+    public ResponseEntity<String> updateCar(@RequestBody RegisterCarRequest registerCarRequest) {
+        Car car = carMapper.dtoToCar(registerCarRequest);
+        carService.updateCar(car);
+        return ResponseEntity.ok("Car updated");
+    }
+
+    @GetMapping("/car/getbyregnumber")
+    public ResponseEntity<String> getCar(@RequestParam String regNumber) {
+        carService.getCar(regNumber);
+        return ResponseEntity.ok("Car is here");
+    }
 }
