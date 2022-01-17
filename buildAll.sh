@@ -4,5 +4,5 @@ docker build bookingservice -t bookingservice
 docker build carservice -t carservice
 docker build userservice -t userservice
 
-#command i terminalen i rooten .\buildAll.sh
-#build
+#command i terminalen i rooten: .\buildAll.sh
+#sedan kör: docker compose up
