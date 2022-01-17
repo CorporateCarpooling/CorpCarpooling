@@ -1,6 +1,5 @@
 package com.example.userservice.clientapi;
 
-import com.example.model.User;
 import com.example.userservice.model.Car;
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
@@ -16,11 +15,9 @@ public class CarDataApi {
     private final Environment environment;
 
     public Optional<Car> getCarByRegistrationNumber(String registrationNumber) {
-        // https://dzone.com/articles/resttemplate-vs-webclient
-        // Tror man bör försöka använda webClient för att prata med mariadbService container.
+
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
-        //Kolla om användaren redan finns.
         Mono<Car> carInDatabase = webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/car")
@@ -43,4 +40,5 @@ public class CarDataApi {
                 .bodyToMono(String.class);
         String response = postResponse.block();
     }
+
 }

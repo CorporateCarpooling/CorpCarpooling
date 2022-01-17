@@ -3,7 +3,6 @@ package com.example.mariadbservice.controller;
 import com.example.mariadbservice.domain.CarService;
 import com.example.mariadbservice.mappers.CarMapper;
 import com.example.mariadbservice.model.Car;
-import com.example.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

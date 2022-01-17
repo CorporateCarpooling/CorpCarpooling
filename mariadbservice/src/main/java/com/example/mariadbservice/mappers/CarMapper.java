@@ -28,7 +28,4 @@ public interface CarMapper {
 
     List<CarEntity> carsToCarDTOs(List<Car> cars);
 
-//    Car RequestToCar(CarRegistrationRequest carRegistrationRequest);
-
-
 }

@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
+@Table(name = "carbrand")
 public class CarBrandEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

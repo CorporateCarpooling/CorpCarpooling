@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
+@Table(name = "car")
 public class CarEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
