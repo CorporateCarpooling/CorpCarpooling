@@ -61,7 +61,7 @@ public class CarService {
         carEntityFromDb.setFuelType(carEntity.getFuelType());
         carEntityFromDb.setPrice(carEntity.getPrice());
 
-        return carRepository.save(carEntityFromDb).toString();;
+        return carRepository.save(carEntityFromDb);;
     }
 
 
