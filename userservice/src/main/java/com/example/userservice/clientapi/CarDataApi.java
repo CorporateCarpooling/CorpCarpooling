@@ -50,25 +50,11 @@ public class CarDataApi {
     public Mono<Car> updateCar(Car car) {
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
         return webClient.put()
-//                .uri("/car/" + car.getRegistrationNumber())
                 .uri("/car/update")
-//                .bodyValue(car)
                 .body(Mono.just(car), Car.class)
                 .retrieve()
                 .bodyToMono(Car.class);
     }
-
-/*
-    public Mono<Employee> update(Employee e)
-    {
-        return webClient.put()
-                .uri("/employees/" + e.getId())
-                .body(Mono.just(e), Employee.class)
-                .retrieve()
-                .bodyToMono(Employee.class);
-    }
-
- */
 
 
 

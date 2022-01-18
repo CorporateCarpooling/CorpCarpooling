@@ -34,7 +34,7 @@ public class CarService {
         if (carToUpdate.isPresent()) {
 
             carDataApi.updateCar(car).block();
-            System.out.println(car.toString());
+            System.out.println(car);
             System.out.println(carToUpdate.get());
 
         } else {

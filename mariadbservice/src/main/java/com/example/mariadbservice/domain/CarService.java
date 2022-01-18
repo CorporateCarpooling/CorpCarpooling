@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
+
 @Service
 @AllArgsConstructor
 public class CarService {
@@ -45,43 +46,28 @@ public class CarService {
     }
 
     public String updateCar(String registrationNumber, Car car) {
-        var carEntity = carMapper.carToCarDto(car);
+        CarEntity newCarEntity = carMapper.carToCarDto(car);
         CarEntity carEntityFromDb = carRepository.findByRegistrationNumber(registrationNumber);
-        System.out.println(carEntityFromDb.toString());
-        CarBrandEntity carBrandEntity = carBrandRepository.findByBrandName(carEntity.getCarBrand().getBrandName());
-        if (carEntity.getCarBrand().equals(carBrandEntity)) {
-            carEntityFromDb.setCarBrand(carEntity.getCarBrand());
-        } else {
-            carBrandEntity = carBrandRepository.save(carEntity.getCarBrand());
-            carEntityFromDb.setCarBrand(carEntity.getCarBrand());
+///        CarBrandEntity carBrandEntity = carBrandRepository.findById(carEntityFromDb.getCarBrand().getId());
+        YearModelEntity yearModelEntity = yearModelRepository.getById(carEntityFromDb.getYearModel().getId());
 
-        }
-//        carEntityFromDb.setYearModel(carEntity.getYearModel());
-        carEntityFromDb.setAvailableSeats(carEntity.getAvailableSeats());
-        carEntityFromDb.setFuelType(carEntity.getFuelType());
-        carEntityFromDb.setPrice(carEntity.getPrice());
+        System.out.println(carEntityFromDb);
 
-        return carRepository.save(carEntityFromDb);;
+        carEntityFromDb.setAvailableSeats(newCarEntity.getAvailableSeats());
+        carEntityFromDb.setFuelType(newCarEntity.getFuelType());
+        carEntityFromDb.setYearModel(newCarEntity.getYearModel());
+  //      if (!carEntityFromDb.getYearModel().getYearModel().equals(newCarEntity.getYearModel().getYearModel())){
+            yearModelEntity.setYearModel(newCarEntity.getYearModel().getYearModel());
+            yearModelRepository.save(yearModelEntity);
+  //      } else {
+
+  //     }
+        carEntityFromDb.setPrice(newCarEntity.getPrice());
+        System.out.println(carRepository.save(carEntityFromDb));
+
+        return carRepository.save(carEntityFromDb).toString();
+
     }
-
-
-/*
-    @PutMapping("/tutorials/{id}")
-    public ResponseEntity<Tutorial> updateTutorial(@PathVariable("id") long id, @RequestBody Tutorial tutorial) {
-        Optional<Tutorial> tutorialData = tutorialRepository.findById(id);
-
-        if (tutorialData.isPresent()) {
-            Tutorial _tutorial = tutorialData.get();
-            _tutorial.setTitle(tutorial.getTitle());
-            _tutorial.setDescription(tutorial.getDescription());
-            _tutorial.setPublished(tutorial.isPublished());
-            return new ResponseEntity<>(tutorialRepository.save(_tutorial), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
- */
 
 }
 

@@ -27,9 +27,11 @@ public class CarController {
        Car car = carService.getCarByRegistrationNumber(registrationNumber);
         return ResponseEntity.ok(car);
     }
-    @PutMapping("car/update/{regnumber}")
-        public ResponseEntity<Car> updateCar(@PathVariable("regnumber") String registrationNumber, @RequestBody CarRequest carRequest) {
-        Car car = carService.getCarByRegistrationNumber(registrationNumber);
+    @PutMapping("car/update")
+        public ResponseEntity<Car> updateCar(@RequestBody CarRequest carRequest) {
+        Car car = carMapper.dtoToCar(carRequest);
+        String registrationNumber = carRequest.getRegistrationNumber();
+        carService.updateCar(registrationNumber, car);
         return ResponseEntity.ok(car);
     }
 
