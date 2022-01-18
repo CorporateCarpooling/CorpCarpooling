@@ -1,5 +1,6 @@
 package com.example.mariadbservice.mappers;
 
+import com.example.mariadbservice.controller.UpdateUserRequest;
 import com.example.mariadbservice.controller.UserRequest;
 import com.example.mariadbservice.entity.RoleEntity;
 import com.example.mariadbservice.entity.UserEntity;
@@ -26,6 +27,8 @@ public abstract class UserMapper {
 
     public abstract User toUser(UserRequest userRequest);
 
+    public abstract User toUser(UpdateUserRequest updateUserRequest);
+
     @Mapping(target = "roles", expression = "java(listOfEntityToListOfEnum(userEntity.getRoles()))")
     public abstract User toUser(UserEntity userEntity);
     //User toUser(UserEntity savedEntity);
@@ -51,6 +54,7 @@ public abstract class UserMapper {
         }
         return roleEntity;
     }
+
 
 
 }

@@ -89,7 +89,7 @@ class TestUserController {
         Mockito.when(userService.getUserByEmail(email)).thenReturn(user);
 
         //when
-        var response= underTest.getUser(email);
+        var response= underTest.getUser(email, null);
 
         //Then
         assertEquals(200, response.getStatusCodeValue());

@@ -42,8 +42,17 @@ public class UserService {
         userInDatabase.setEmail(user.getEmail());
         userInDatabase.setName(user.getName());
         userInDatabase.setPassword(user.getPassword());
-        userInDatabase.setRoles(userMapper.listOfEnumToListOfEntity(user.getRoles()));
+//        userInDatabase.setRoles(userMapper.listOfEnumToListOfEntity(user.getRoles()));
         userRepository.save(userInDatabase);
 
+    }
+
+    public User getUserById(String id) {
+        Optional<UserEntity> userEntity = userRepository.findById(Long.parseLong(id));
+        if (!userEntity.isPresent()) {
+            throw new RuntimeException("User doesn't exsist");
+        }
+        User user = userMapper.toUser(userEntity.get());
+        return user;
     }
 }

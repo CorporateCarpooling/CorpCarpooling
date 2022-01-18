@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Slf4j
 @RestController
@@ -42,6 +43,16 @@ public class UserController {
         return ResponseEntity.ok("User Registered.");
     }
 
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping ("/user/update")
+    public ResponseEntity<String> registerUser(Principal principal, @Valid @RequestBody UpdateUserRequest updateUserRequest) {
+        log.info("user registration{}", updateUserRequest);
+        User user = userMapper.toUser(updateUserRequest);
+        user.setId(Long.parseLong(principal.getName()));
+        userService.updateCustomer(user);
+        return ResponseEntity.ok("User Updated.");
+    }
+
     @PostMapping("/user/login")
     public ResponseEntity<?> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
@@ -61,5 +72,7 @@ public class UserController {
     public ResponseEntity<String> ping(){
         return ResponseEntity.ok("pong");
     }
+
+
 
 }

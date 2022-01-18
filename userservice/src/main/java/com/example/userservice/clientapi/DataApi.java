@@ -49,6 +49,7 @@ public class DataApi /*implements UserDetailsService*/ {
                 .bodyToMono(String.class);
         String response = postResponse.block();
     }
+
     public void updateUser(User user){
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
         Mono<String> postResponse = webClient.patch()
@@ -60,7 +61,6 @@ public class DataApi /*implements UserDetailsService*/ {
                 .bodyToMono(String.class);
         //Gör roliga saker. 1m
 
-        //Gör mer riliga saker 1m
         String response = postResponse.block();
 
     }
