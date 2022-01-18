@@ -5,7 +5,11 @@ import com.example.mariadbservice.mappers.UserMapper;
 import com.example.model.User;
 import com.example.mariadbservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+
+import java.util.Optional;
 
 
 @Service
@@ -27,6 +31,19 @@ public class UserService {
         UserEntity userEntity = userRepository.findByEmail(userEmail);
         User user = userMapper.toUser(userEntity);
         return user;
+
+    }
+    public void updateUser(User user) {
+        Optional<UserEntity> userEntity = userRepository.findById(user.getId());
+        if (!userEntity.isPresent()) {
+            throw new RuntimeException("User doesn't exsist");
+        }
+        UserEntity userInDatabase = userEntity.get();
+        userInDatabase.setEmail(user.getEmail());
+        userInDatabase.setName(user.getName());
+        userInDatabase.setPassword(user.getPassword());
+        userInDatabase.setRoles(userMapper.listOfEnumToListOfEntity(user.getRoles()));
+        userRepository.save(userInDatabase);
 
     }
 }

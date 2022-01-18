@@ -49,21 +49,19 @@ public class DataApi /*implements UserDetailsService*/ {
                 .bodyToMono(String.class);
         String response = postResponse.block();
     }
+    public void updateUser(User user){
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+        Mono<String> postResponse = webClient.patch()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/user")
+                        .build())
+                .bodyValue(user)
+                .retrieve()
+                .bodyToMono(String.class);
+        //Gör roliga saker. 1m
 
-    /*@Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optionalUser = getUserByEmail(username);
-        if(optionalUser.isEmpty()){
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
-        return new org.springframework.security.core.userdetails.User(optionalUser.get().getEmail(), optionalUser.get().getPassword(), getAuthority(optionalUser.get()));
+        //Gör mer riliga saker 1m
+        String response = postResponse.block();
+
     }
-
-    private Set<SimpleGrantedAuthority> getAuthority(User user) {
-        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
-        });
-        return authorities;
-    }*/
 }

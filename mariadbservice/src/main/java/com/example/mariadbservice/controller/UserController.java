@@ -27,4 +27,12 @@ public class UserController {
         User user = userService.getUserByEmail(email);
         return ResponseEntity.ok(user);
     }
+
+    @PatchMapping("user")
+    public ResponseEntity<String> putUser(@RequestParam UserRequest userRequest) {
+        User user = userMapper.toUser(userRequest);
+        userService.updateUser(user);
+        return ResponseEntity.ok("kkkk");
+    }
+
 }
