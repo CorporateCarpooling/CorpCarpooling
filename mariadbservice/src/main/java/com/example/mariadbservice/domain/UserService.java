@@ -55,4 +55,12 @@ public class UserService {
         User user = userMapper.toUser(userEntity.get());
         return user;
     }
+
+    public void deleteUser(Long id) {
+        Optional<UserEntity> userEntity = userRepository.findById(id);
+        if (!userEntity.isPresent()) {
+            throw new RuntimeException("User doesn't exsist");
+        }
+        userRepository.delete(userEntity.get());
+    }
 }

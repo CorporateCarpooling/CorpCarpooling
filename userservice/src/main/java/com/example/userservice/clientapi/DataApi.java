@@ -64,4 +64,15 @@ public class DataApi /*implements UserDetailsService*/ {
         String response = postResponse.block();
 
     }
+    public void deleteUser(String id){
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+        Mono<String> postResponse = webClient.delete()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/user")
+                        .queryParam("id", id)
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class); //har string som param. och retunerar string
+        String response = postResponse.block(); //väntar på response
+    }
 }

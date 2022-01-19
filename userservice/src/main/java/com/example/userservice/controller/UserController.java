@@ -15,10 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -45,12 +42,20 @@ public class UserController {
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping ("/user/update")
-    public ResponseEntity<String> registerUser(Principal principal, @Valid @RequestBody UpdateUserRequest updateUserRequest) {
-        log.info("user registration{}", updateUserRequest);
+    public ResponseEntity<String> updateUser(Principal principal, @Valid @RequestBody UpdateUserRequest updateUserRequest) {
         User user = userMapper.toUser(updateUserRequest);
         user.setId(Long.parseLong(principal.getName()));
         userService.updateCustomer(user);
         return ResponseEntity.ok("User Updated.");
+    }
+   // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("/user/delete")
+    public ResponseEntity<String> DeleteUser(Principal principal, @RequestParam String id) {
+       // User user = userMapper.toUser(registerUserRequest);
+       // user.setId(Long.parseLong(principal.getName()));
+        userService.deleteCustomer(id);
+        return ResponseEntity.ok("User deleted.");
     }
 
     @PostMapping("/user/login")
