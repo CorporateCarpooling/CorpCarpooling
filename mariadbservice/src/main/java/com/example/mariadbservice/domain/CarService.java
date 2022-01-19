@@ -48,22 +48,11 @@ public class CarService {
     public String updateCar(String registrationNumber, Car car) {
         CarEntity newCarEntity = carMapper.carToCarDto(car);
         CarEntity carEntityFromDb = carRepository.findByRegistrationNumber(registrationNumber);
-///        CarBrandEntity carBrandEntity = carBrandRepository.findById(carEntityFromDb.getCarBrand().getId());
-        YearModelEntity yearModelEntity = yearModelRepository.getById(carEntityFromDb.getYearModel().getId());
-
-        System.out.println(carEntityFromDb);
+//        System.out.println(carEntityFromDb);
 
         carEntityFromDb.setAvailableSeats(newCarEntity.getAvailableSeats());
-        carEntityFromDb.setFuelType(newCarEntity.getFuelType());
-        carEntityFromDb.setYearModel(newCarEntity.getYearModel());
-  //      if (!carEntityFromDb.getYearModel().getYearModel().equals(newCarEntity.getYearModel().getYearModel())){
-            yearModelEntity.setYearModel(newCarEntity.getYearModel().getYearModel());
-            yearModelRepository.save(yearModelEntity);
-  //      } else {
-
-  //     }
         carEntityFromDb.setPrice(newCarEntity.getPrice());
-        System.out.println(carRepository.save(carEntityFromDb));
+//        System.out.println(carRepository.save(carEntityFromDb));
 
         return carRepository.save(carEntityFromDb).toString();
 
