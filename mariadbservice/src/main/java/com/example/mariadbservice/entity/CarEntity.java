@@ -16,12 +16,12 @@ public class CarEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CarBrandEntity carBrand;
 
     private String registrationNumber;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     private YearModelEntity yearModel;
 
     @Enumerated(EnumType.STRING)

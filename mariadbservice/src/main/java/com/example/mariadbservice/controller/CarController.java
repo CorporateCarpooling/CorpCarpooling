@@ -18,22 +18,28 @@ public class CarController {
     @PostMapping("car")
     public ResponseEntity<String> addCar(@RequestBody CarRequest carRequest) {
         Car car = carMapper.dtoToCar(carRequest);
-        Long id = carService.createCar(car);
+        carService.createCar(car);
         return ResponseEntity.ok("Car registered");
     }
 
     @GetMapping("car")
     public ResponseEntity<Car> getCar(@RequestParam String registrationNumber) {
-       Car car = carService.getCarByRegistrationNumber(registrationNumber);
+        Car car = carService.getCarByRegistrationNumber(registrationNumber);
         return ResponseEntity.ok(car);
     }
+
     @PutMapping("car/update")
-        public ResponseEntity<Car> updateCar(@RequestBody CarRequest carRequest) {
+    public ResponseEntity<Car> updateCar(@RequestBody CarRequest carRequest) {
         Car car = carMapper.dtoToCar(carRequest);
         String registrationNumber = carRequest.getRegistrationNumber();
         carService.updateCar(registrationNumber, car);
         return ResponseEntity.ok(car);
     }
 
+    @DeleteMapping("car/delete")
+    public ResponseEntity<String> deleteCar(@RequestParam String regNumber)  {
+        carService.deleteCarByRegistrationNumber(regNumber);
+        return ResponseEntity.ok("Car deleted");
+    }
 
-}
+    }

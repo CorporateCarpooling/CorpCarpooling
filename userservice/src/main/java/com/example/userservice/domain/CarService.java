@@ -28,11 +28,9 @@ public class CarService {
 
 
     public void updateCar(Car car) {
-
         Optional<Car> carToUpdate = carDataApi.getCarByRegistrationNumber(car.getRegistrationNumber());
 
         if (carToUpdate.isPresent()) {
-
             carDataApi.updateCar(car).block();
             System.out.println(car);
             System.out.println(carToUpdate.get());
@@ -43,11 +41,9 @@ public class CarService {
     }
 
     public void getCar(String regNumber) {
-
         Optional<Car> carInDatabase = carDataApi.getCarByRegistrationNumber(regNumber);
 
         if (carInDatabase.isPresent()) {
-
             System.out.println(carInDatabase.get());
         } else {
             throw new RuntimeException("Car doesn't exist. Please register a car");
@@ -55,5 +51,13 @@ public class CarService {
         }
     }
 
+    public void deleteCar(String regNumber) {
+        Optional<Car> carInDatabase = carDataApi.getCarByRegistrationNumber(regNumber);
+
+        if (!carInDatabase.isPresent()) {
+            throw new RuntimeException("Car doesn't exist. Please register a car");
+        }
+        carDataApi.deleteCar(regNumber);
+    }
 
 }

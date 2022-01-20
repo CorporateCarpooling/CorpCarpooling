@@ -19,7 +19,6 @@ public class CarDataApi {
     public Optional<Car> getCarByRegistrationNumber(String registrationNumber) {
 
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
-        log.info("CarDataApi 1 getting a car");
 
         Mono<Car> carInDatabase = webClient.get()
                 .uri(uriBuilder -> uriBuilder
@@ -28,8 +27,6 @@ public class CarDataApi {
                         .build())
                 .retrieve()
                 .bodyToMono(Car.class);
-        log.info("CarDataApi 2 getting a car");
-
         return Optional.ofNullable(carInDatabase.block());
     }
 
@@ -56,6 +53,21 @@ public class CarDataApi {
                 .bodyToMono(Car.class);
     }
 
+    public void deleteCar(String regNumber) {
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+        System.out.println("in DataApi in userservice");
+
+        Mono<String> postResponse = webClient.delete()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/car/delete")
+                        .queryParam("regNumber", regNumber)
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class);
+        String response = postResponse.block();
+    }
+
+ }
 
 
-}
+

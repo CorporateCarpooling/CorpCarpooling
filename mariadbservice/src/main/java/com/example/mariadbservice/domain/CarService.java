@@ -11,6 +11,7 @@ import com.example.mariadbservice.repository.YearModelRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 
 
 @Service
@@ -29,32 +30,39 @@ public class CarService {
         if (carBrandEntity == null) {
             carBrandEntity = carBrandRepository.save(carEntity.getCarBrand());
         }
-        YearModelEntity yearModelEntity = yearModelRepository.findByYearModel(carEntity.getYearModel().getYearModel());
-        if (yearModelEntity == null) {
-            yearModelEntity = yearModelRepository.save(carEntity.getYearModel());
+        YearModelEntity yearModelEntityFromDb = yearModelRepository.findByYearModel(carEntity.getYearModel().getYearModel());
+        if (yearModelEntityFromDb == null) {
+            yearModelEntityFromDb = yearModelRepository.save(carEntity.getYearModel());
         }
-
+        carEntity.setYearModel(yearModelEntityFromDb);
         carEntity.setCarBrand(carBrandEntity);
-        carEntity.setYearModel(yearModelEntity);
         return carRepository.save(carEntity).getId();
     }
 
     public Car getCarByRegistrationNumber(String registrationNumber) {
         CarEntity carEntity = carRepository.findByRegistrationNumber(registrationNumber);
-        Car car = carMapper.dtoToCar(carEntity);
-        return car;
+        return carMapper.dtoToCar(carEntity);
     }
 
     public String updateCar(String registrationNumber, Car car) {
         CarEntity newCarEntity = carMapper.carToCarDto(car);
         CarEntity carEntityFromDb = carRepository.findByRegistrationNumber(registrationNumber);
-//        System.out.println(carEntityFromDb);
 
         carEntityFromDb.setAvailableSeats(newCarEntity.getAvailableSeats());
         carEntityFromDb.setPrice(newCarEntity.getPrice());
-//        System.out.println(carRepository.save(carEntityFromDb));
 
         return carRepository.save(carEntityFromDb).toString();
+
+    }
+
+    public void deleteCarByRegistrationNumber(String registrationNumber) {
+
+        Optional<CarEntity> carInDatabase = Optional.ofNullable(carRepository.findByRegistrationNumber(registrationNumber));
+
+        if (!carInDatabase.isPresent()) {
+            throw new RuntimeException("Car doesn't exist. Please register a car");
+        }
+        carRepository.delete(carInDatabase.get());
 
     }
 
