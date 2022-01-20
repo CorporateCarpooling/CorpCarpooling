@@ -19,7 +19,6 @@ public class CarDataApi {
     public Optional<Car> getCarByRegistrationNumber(String registrationNumber) {
 
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
-        log.info("CarDataApi 1 getting a car");
 
         Mono<Car> carInDatabase = webClient.get()
                 .uri(uriBuilder -> uriBuilder
@@ -28,7 +27,6 @@ public class CarDataApi {
                         .build())
                 .retrieve()
                 .bodyToMono(Car.class);
-        log.info("CarDataApi 2 getting a car");
 
         return Optional.ofNullable(carInDatabase.block());
     }
@@ -47,15 +45,16 @@ public class CarDataApi {
 
     }
 
-    public Mono<Car> updateCar(Car car) {
+    public Optional<Car> updateCar(Car car) {
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
-        return webClient.put()
+
+        Mono<Car> carToUpdate = webClient.patch()
                 .uri("/car/update")
                 .body(Mono.just(car), Car.class)
                 .retrieve()
                 .bodyToMono(Car.class);
+        return Optional.ofNullable(carToUpdate.block());
     }
-
 
 
 }

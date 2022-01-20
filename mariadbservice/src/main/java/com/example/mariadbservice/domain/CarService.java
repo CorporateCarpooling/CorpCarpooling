@@ -41,18 +41,14 @@ public class CarService {
 
     public Car getCarByRegistrationNumber(String registrationNumber) {
         CarEntity carEntity = carRepository.findByRegistrationNumber(registrationNumber);
-        Car car = carMapper.dtoToCar(carEntity);
-        return car;
+        return carMapper.dtoToCar(carEntity);
     }
 
-    public String updateCar(String registrationNumber, Car car) {
-        CarEntity newCarEntity = carMapper.carToCarDto(car);
-        CarEntity carEntityFromDb = carRepository.findByRegistrationNumber(registrationNumber);
-//        System.out.println(carEntityFromDb);
+    public String updateCar(Car car) {
+        CarEntity carEntityFromDb = carRepository.findByRegistrationNumber(car.getRegistrationNumber());
 
-        carEntityFromDb.setAvailableSeats(newCarEntity.getAvailableSeats());
-        carEntityFromDb.setPrice(newCarEntity.getPrice());
-//        System.out.println(carRepository.save(carEntityFromDb));
+        carEntityFromDb.setAvailableSeats(car.getAvailableSeats());
+        carEntityFromDb.setPrice(car.getPricePerPassenger());
 
         return carRepository.save(carEntityFromDb).toString();
 

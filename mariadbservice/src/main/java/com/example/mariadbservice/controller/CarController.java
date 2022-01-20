@@ -27,11 +27,10 @@ public class CarController {
        Car car = carService.getCarByRegistrationNumber(registrationNumber);
         return ResponseEntity.ok(car);
     }
-    @PutMapping("car/update")
+    @PatchMapping("car/update")
         public ResponseEntity<Car> updateCar(@RequestBody CarRequest carRequest) {
         Car car = carMapper.dtoToCar(carRequest);
-        String registrationNumber = carRequest.getRegistrationNumber();
-        carService.updateCar(registrationNumber, car);
+        carService.updateCar(car);
         return ResponseEntity.ok(car);
     }
 
