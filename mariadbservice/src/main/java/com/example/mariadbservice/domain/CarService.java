@@ -46,10 +46,7 @@ public class CarService {
 
     public String updateCar(Car car) {
         CarEntity carEntityFromDb = carRepository.findByRegistrationNumber(car.getRegistrationNumber());
-
         carEntityFromDb.setAvailableSeats(car.getAvailableSeats());
-        carEntityFromDb.setPrice(car.getPricePerPassenger());
-
         return carRepository.save(carEntityFromDb).toString();
 
     }

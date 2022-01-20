@@ -36,7 +36,7 @@ public class CarDataApi {
 
         Mono<String> postResponse = webClient.post()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/car")
+                        .path("/car/register")
                         .build())
                 .bodyValue(car)
                 .retrieve()

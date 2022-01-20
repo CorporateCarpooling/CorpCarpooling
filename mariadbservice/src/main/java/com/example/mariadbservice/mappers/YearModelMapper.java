@@ -8,6 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface YearModelMapper {
+    /*
 
     YearModelMapper INSTANCE = Mappers.getMapper(YearModelMapper.class);
 
@@ -15,4 +16,6 @@ public interface YearModelMapper {
 
     YearModel entityToYearModel(YearModelEntity carBrandEntity);
 
+
+     */
 }
