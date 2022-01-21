@@ -50,20 +50,29 @@ public class DataApi /*implements UserDetailsService*/ {
         String response = postResponse.block();
     }
 
-    /*@Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optionalUser = getUserByEmail(username);
-        if(optionalUser.isEmpty()){
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
-        return new org.springframework.security.core.userdetails.User(optionalUser.get().getEmail(), optionalUser.get().getPassword(), getAuthority(optionalUser.get()));
-    }
+    public void updateUser(User user){
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+        Mono<String> postResponse = webClient.patch()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/user")
+                        .build())
+                .bodyValue(user)
+                .retrieve()
+                .bodyToMono(String.class);
+        //Gör roliga saker. 1m
 
-    private Set<SimpleGrantedAuthority> getAuthority(User user) {
-        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
-        });
-        return authorities;
-    }*/
+        String response = postResponse.block();
+
+    }
+    public void deleteUser(String id){
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+        Mono<String> postResponse = webClient.delete()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/user")
+                        .queryParam("id", id)
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class); //har string som param. och retunerar string
+        String response = postResponse.block(); //väntar på response
+    }
 }

@@ -22,5 +22,4 @@ public class CarController {
         carService.registerCar(car);
         return ResponseEntity.ok("Car registered");
     }
-
 }

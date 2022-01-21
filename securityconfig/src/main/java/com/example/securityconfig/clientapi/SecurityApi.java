@@ -37,13 +37,29 @@ public class SecurityApi implements UserDetailsService {
         return Optional.ofNullable(userInDatabase.block());
     }
 
+    private Optional<User> getUserById(String id) {
+        // https://dzone.com/articles/resttemplate-vs-webclient
+        // Tror man bör försöka använda webClient för att prata med mariadbService container.
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+
+        //Kolla om användaren redan finns.
+        Mono<User> userInDatabase = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/user")
+                        .queryParam("id", id)
+                        .build())
+                .retrieve()
+                .bodyToMono(User.class);
+        return Optional.ofNullable(userInDatabase.block());
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optionalUser = getUserByEmail(username);
+        Optional<User> optionalUser = username.contains("@") ? getUserByEmail(username) : getUserById(username);
         if(optionalUser.isEmpty()){
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        return new org.springframework.security.core.userdetails.User(optionalUser.get().getEmail(), optionalUser.get().getPassword(), getAuthority(optionalUser.get()));
+        return new org.springframework.security.core.userdetails.User(Long.toString(optionalUser.get().getId()), optionalUser.get().getPassword(), getAuthority(optionalUser.get()));
     }
 
     private Set<SimpleGrantedAuthority> getAuthority(User user) {
