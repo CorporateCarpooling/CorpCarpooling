@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
+
 @Service
 @AllArgsConstructor
 public class CarService {
@@ -40,8 +41,14 @@ public class CarService {
 
     public Car getCarByRegistrationNumber(String registrationNumber) {
         CarEntity carEntity = carRepository.findByRegistrationNumber(registrationNumber);
-        Car car = carMapper.dtoToCar(carEntity);
-        return car;
+        return carMapper.dtoToCar(carEntity);
+    }
+
+    public String updateCar(Car car) {
+        CarEntity carEntityFromDb = carRepository.findByRegistrationNumber(car.getRegistrationNumber());
+        carEntityFromDb.setAvailableSeats(car.getAvailableSeats());
+        return carRepository.save(carEntityFromDb).toString();
+
     }
 
 }
