@@ -34,6 +34,4 @@ public class CarController {
         carService.updateCar(car);
         return ResponseEntity.ok(car);
     }
-
-
 }
