@@ -23,7 +23,7 @@ public class CarController {
         return ResponseEntity.ok("Car registered");
     }
 
-    @PutMapping("/car/update")
+    @PatchMapping("/car/update")
     public ResponseEntity<String> updateCar(@RequestBody RegisterCarRequest registerCarRequest) {
         Car car = carMapper.dtoToCar(registerCarRequest);
         carService.updateCar(car);
@@ -31,9 +31,9 @@ public class CarController {
     }
 
     @GetMapping("/car/getbyregnumber")
-    public ResponseEntity<String> getCar(@RequestParam String regNumber) {
-        carService.getCar(regNumber);
-        return ResponseEntity.ok("Car is here");
+    public ResponseEntity<Car> getCar(@RequestParam String regNumber) {
+        Car car = carService.getCar(regNumber);
+        return ResponseEntity.ok(car);
     }
     @DeleteMapping("/car/{regNumber}")
     public ResponseEntity<String> deleteCar(@RequestParam String regNumber) {

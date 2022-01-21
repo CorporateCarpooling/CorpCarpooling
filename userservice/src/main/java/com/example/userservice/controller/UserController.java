@@ -15,12 +15,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Slf4j
 @RestController
@@ -42,6 +40,24 @@ public class UserController {
         return ResponseEntity.ok("User Registered.");
     }
 
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping ("/user/update")
+    public ResponseEntity<String> updateUser(Principal principal, @Valid @RequestBody UpdateUserRequest updateUserRequest) {
+        User user = userMapper.toUser(updateUserRequest);
+        user.setId(Long.parseLong(principal.getName()));
+        userService.updateCustomer(user);
+        return ResponseEntity.ok("User Updated.");
+    }
+   // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("/user/delete")
+    public ResponseEntity<String> DeleteUser(Principal principal, @RequestParam String id) {
+       // User user = userMapper.toUser(registerUserRequest);
+       // user.setId(Long.parseLong(principal.getName()));
+        userService.deleteCustomer(id);
+        return ResponseEntity.ok("User deleted.");
+    }
+
     @PostMapping("/user/login")
     public ResponseEntity<?> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
@@ -61,5 +77,7 @@ public class UserController {
     public ResponseEntity<String> ping(){
         return ResponseEntity.ok("pong");
     }
+
+
 
 }

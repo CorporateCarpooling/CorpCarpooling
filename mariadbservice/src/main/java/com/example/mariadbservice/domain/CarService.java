@@ -30,12 +30,13 @@ public class CarService {
         if (carBrandEntity == null) {
             carBrandEntity = carBrandRepository.save(carEntity.getCarBrand());
         }
-        YearModelEntity yearModelEntityFromDb = yearModelRepository.findByYearModel(carEntity.getYearModel().getYearModel());
-        if (yearModelEntityFromDb == null) {
-            yearModelEntityFromDb = yearModelRepository.save(carEntity.getYearModel());
+        YearModelEntity yearModelEntity = yearModelRepository.findByYearModel(carEntity.getYearModel().getYearModel());
+        if (yearModelEntity == null) {
+            yearModelEntity = yearModelRepository.save(carEntity.getYearModel());
         }
-        carEntity.setYearModel(yearModelEntityFromDb);
+
         carEntity.setCarBrand(carBrandEntity);
+        carEntity.setYearModel(yearModelEntity);
         return carRepository.save(carEntity).getId();
     }
 
@@ -44,17 +45,12 @@ public class CarService {
         return carMapper.dtoToCar(carEntity);
     }
 
-    public String updateCar(String registrationNumber, Car car) {
-        CarEntity newCarEntity = carMapper.carToCarDto(car);
-        CarEntity carEntityFromDb = carRepository.findByRegistrationNumber(registrationNumber);
-
-        carEntityFromDb.setAvailableSeats(newCarEntity.getAvailableSeats());
-        carEntityFromDb.setPrice(newCarEntity.getPrice());
-
+    public String updateCar(Car car) {
+        CarEntity carEntityFromDb = carRepository.findByRegistrationNumber(car.getRegistrationNumber());
+        carEntityFromDb.setAvailableSeats(car.getAvailableSeats());
         return carRepository.save(carEntityFromDb).toString();
 
     }
-
     public void deleteCarByRegistrationNumber(String registrationNumber) {
 
         Optional<CarEntity> carInDatabase = Optional.ofNullable(carRepository.findByRegistrationNumber(registrationNumber));
@@ -65,6 +61,5 @@ public class CarService {
         carRepository.delete(carInDatabase.get());
 
     }
-
 }
 

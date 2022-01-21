@@ -11,6 +11,5 @@ public class Car {
     private YearModel yearModel;
     private String fuelType;
     private int availableSeats;
-    private double pricePerPassenger;
 
 }

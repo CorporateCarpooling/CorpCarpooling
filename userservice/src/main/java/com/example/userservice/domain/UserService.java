@@ -38,4 +38,12 @@ public class UserService {
 
     }
 
+    public void updateCustomer(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        dataApi.updateUser(user);
+    }
+
+    public void deleteCustomer(String id) {
+        dataApi.deleteUser(id);
+    }
 }

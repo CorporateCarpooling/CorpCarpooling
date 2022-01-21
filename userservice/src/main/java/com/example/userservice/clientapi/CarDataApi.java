@@ -35,24 +35,24 @@ public class CarDataApi {
 
         Mono<String> postResponse = webClient.post()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/car")
+                        .path("/car/register")
                         .build())
                 .bodyValue(car)
                 .retrieve()
                 .bodyToMono(String.class);
         String response = postResponse.block();
-
     }
 
-    public Mono<Car> updateCar(Car car) {
+    public Optional<Car> updateCar(Car car) {
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
-        return webClient.put()
+
+        Mono<Car> carToUpdate = webClient.patch()
                 .uri("/car/update")
                 .body(Mono.just(car), Car.class)
                 .retrieve()
                 .bodyToMono(Car.class);
+        return Optional.ofNullable(carToUpdate.block());
     }
-
     public void deleteCar(String regNumber) {
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
@@ -66,7 +66,4 @@ public class CarDataApi {
         String response = postResponse.block();
     }
 
- }
-
-
-
+}
