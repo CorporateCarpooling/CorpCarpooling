@@ -55,7 +55,6 @@ public class CarDataApi {
 
     public void deleteCar(String regNumber) {
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
-        System.out.println("in DataApi in userservice");
 
         Mono<String> postResponse = webClient.delete()
                 .uri(uriBuilder -> uriBuilder
