@@ -1,5 +1,6 @@
 package com.example.mariadbservice.mappers;
 
+import com.example.mariadbservice.controller.UpdateUserRequest;
 import com.example.mariadbservice.controller.UserRequest;
 import com.example.mariadbservice.entity.RoleEntity;
 import com.example.mariadbservice.entity.UserEntity;
@@ -8,6 +9,7 @@ import com.example.model.User;
 import com.example.mariadbservice.repository.RoleRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -25,17 +27,19 @@ public abstract class UserMapper {
 
     public abstract User toUser(UserRequest userRequest);
 
+    public abstract User toUser(UpdateUserRequest updateUserRequest);
+
     @Mapping(target = "roles", expression = "java(listOfEntityToListOfEnum(userEntity.getRoles()))")
     public abstract User toUser(UserEntity userEntity);
     //User toUser(UserEntity savedEntity);
 
-    protected final List<Role> listOfEntityToListOfEnum(List<RoleEntity> roles) {
+    public final List<Role> listOfEntityToListOfEnum(List<RoleEntity> roles) {
         return roles.stream()
                 .map(roleEntity -> Role.valueOf(roleEntity.getName()))
                 .collect(Collectors.toList());
     }
 
-    protected final List<RoleEntity> listOfEnumToListOfEntity(List<Role> roles) {
+    public final List<RoleEntity> listOfEnumToListOfEntity(List<Role> roles) {
         return roles.stream()
                 .map(this::findOrCreateRole)
                 .collect(Collectors.toList());
@@ -50,4 +54,7 @@ public abstract class UserMapper {
         }
         return roleEntity;
     }
+
+
+
 }

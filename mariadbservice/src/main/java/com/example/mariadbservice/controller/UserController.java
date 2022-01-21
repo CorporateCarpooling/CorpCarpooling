@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @AllArgsConstructor
 public class UserController {
@@ -23,8 +25,26 @@ public class UserController {
     }
 
     @GetMapping("user")
-    public ResponseEntity<User> getUser(@RequestParam String email) {
-        User user = userService.getUserByEmail(email);
+    public ResponseEntity<User> getUser(@RequestParam(required = false) String email, @RequestParam(required = false) String id) {
+        User user = null;
+        if(email!=null)
+            user = userService.getUserByEmail(email);
+        else if(id!=null)
+            user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
+
+    @PatchMapping("user")
+    public ResponseEntity<String> putUser(@Valid @RequestBody UpdateUserRequest updateUserRequest) {
+        User user = userMapper.toUser(updateUserRequest);
+        userService.updateUser(user);
+        return ResponseEntity.ok("User updated");
+    }
+    @DeleteMapping("user")
+    public ResponseEntity<String> deleteUser(@RequestParam Long id){
+       // User user = userMapper.toUser(userRequest);
+        userService.deleteUser(id);
+        return ResponseEntity.ok("user deleted successfully");
+    }
+
 }

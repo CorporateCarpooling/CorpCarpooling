@@ -1,5 +1,6 @@
 package com.example.mariadbservice.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
