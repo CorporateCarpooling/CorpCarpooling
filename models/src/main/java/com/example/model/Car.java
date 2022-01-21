@@ -1,12 +1,11 @@
-package com.example.mariadbservice.controller;
+package com.example.model;
 
-
-import com.example.model.CarBrand;
-import com.example.model.YearModel;
 import lombok.Data;
 
 @Data
-public class CarRequest {
+public class Car {
+
+    private Long id;
     private CarBrand carBrand;
     private String registrationNumber;
     private YearModel yearModel;

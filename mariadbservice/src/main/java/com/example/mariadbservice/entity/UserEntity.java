@@ -1,6 +1,5 @@
 package com.example.mariadbservice.entity;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,5 +18,6 @@ public class UserEntity {
      private String email;
      private String password;
      @ManyToMany(fetch = FetchType.EAGER)
+     @Enumerated(EnumType.STRING)
      private List<RoleEntity> roles;
 }

@@ -8,17 +8,16 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "route")
-public class RouteEntity {
+@Table(name = "location")
+public class LocationEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    private String address;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private LocationEntity startPointId;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private LocationEntity finishPointId;
+    private CityEntity city;
 
 }
+

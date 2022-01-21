@@ -1,6 +1,6 @@
 package com.example.carservice.controller;
 
-import com.example.carservice.domain.RouteService;
+import com.example.carservice.service.RouteService;
 import com.example.carservice.mappers.RouteMapper;
 import com.example.carservice.model.Route;
 import lombok.AllArgsConstructor;

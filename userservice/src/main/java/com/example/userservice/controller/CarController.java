@@ -1,6 +1,6 @@
 package com.example.userservice.controller;
 
-import com.example.userservice.domain.CarService;
+import com.example.userservice.service.CarService;
 import com.example.userservice.mappers.CarMapper;
 import com.example.userservice.model.Car;
 import lombok.AllArgsConstructor;

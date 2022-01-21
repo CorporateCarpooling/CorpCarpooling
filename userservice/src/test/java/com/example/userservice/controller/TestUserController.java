@@ -1,7 +1,7 @@
 package com.example.userservice.controller;
 
 import com.example.securityconfig.config.TokenProvider;
-import com.example.userservice.domain.UserService;
+import com.example.userservice.service.UserService;
 import com.example.userservice.mappers.UserMapperImpl;
 import com.example.model.User;
 import org.junit.jupiter.api.DisplayName;

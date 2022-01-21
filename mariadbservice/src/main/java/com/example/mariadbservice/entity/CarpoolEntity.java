@@ -15,12 +15,18 @@ public class CarpoolEntity {
     @Id
     @GeneratedValue
     private Long id;
+
     @OneToOne(fetch = FetchType.EAGER)
     private CarEntity car;
-    @OneToOne(fetch = FetchType.EAGER)
-    private UserEntity user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private RouteEntity route;
+
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<RouteEntity> route;
+    private List<PassengerEntity>passengers;
 
     private LocalDateTime departureTime;
+
+    private int availableSeatsForRide;
+    private double pricePerRide;
 }

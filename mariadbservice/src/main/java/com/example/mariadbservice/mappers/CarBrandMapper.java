@@ -1,7 +1,6 @@
 package com.example.mariadbservice.mappers;
 
-import com.example.mariadbservice.entity.CarBrandEntity;
-import com.example.mariadbservice.model.CarBrand;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

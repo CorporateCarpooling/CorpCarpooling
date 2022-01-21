@@ -1,6 +1,7 @@
 package com.example.mariadbservice.entity;
 
-import com.example.mariadbservice.model.FuelType;
+
+import com.example.model.FuelType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,12 +17,12 @@ public class CarEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CarBrandEntity carBrand;
 
     private String registrationNumber;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     private YearModelEntity yearModel;
 
     @Enumerated(EnumType.STRING)

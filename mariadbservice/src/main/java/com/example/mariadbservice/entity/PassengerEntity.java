@@ -5,17 +5,17 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "carbrand")
-public class CarBrandEntity {
+@Table(name = "passenger")
+public class PassengerEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-
     private Long id;
-
-    private String brandName;
+    @OneToOne(fetch = FetchType.EAGER)
+    private UserEntity user;
 
 }
+

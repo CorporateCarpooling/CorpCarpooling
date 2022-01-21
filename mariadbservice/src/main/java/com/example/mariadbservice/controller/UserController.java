@@ -1,6 +1,6 @@
 package com.example.mariadbservice.controller;
 
-import com.example.mariadbservice.domain.UserService;
+import com.example.mariadbservice.service.UserService;
 import com.example.mariadbservice.mappers.UserMapper;
 import com.example.model.User;
 import lombok.AllArgsConstructor;
