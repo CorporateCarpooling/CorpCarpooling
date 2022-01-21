@@ -28,6 +28,5 @@ public class CarEntity {
     private FuelType fuelType;
 
     private int availableSeats;
-    private double price;
 
 }

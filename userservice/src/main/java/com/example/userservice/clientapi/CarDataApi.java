@@ -2,6 +2,7 @@ package com.example.userservice.clientapi;
 
 import com.example.userservice.model.Car;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -9,6 +10,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class CarDataApi {
@@ -25,6 +27,7 @@ public class CarDataApi {
                         .build())
                 .retrieve()
                 .bodyToMono(Car.class);
+
         return Optional.ofNullable(carInDatabase.block());
     }
 
@@ -33,12 +36,25 @@ public class CarDataApi {
 
         Mono<String> postResponse = webClient.post()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/car")
+                        .path("/car/register")
                         .build())
                 .bodyValue(car)
                 .retrieve()
                 .bodyToMono(String.class);
         String response = postResponse.block();
+
     }
+
+    public Optional<Car> updateCar(Car car) {
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+
+        Mono<Car> carToUpdate = webClient.patch()
+                .uri("/car/update")
+                .body(Mono.just(car), Car.class)
+                .retrieve()
+                .bodyToMono(Car.class);
+        return Optional.ofNullable(carToUpdate.block());
+    }
+
 
 }
