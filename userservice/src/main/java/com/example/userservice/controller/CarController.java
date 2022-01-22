@@ -1,8 +1,8 @@
 package com.example.userservice.controller;
 
+import com.example.model.Car;
 import com.example.userservice.service.CarService;
 import com.example.userservice.mappers.CarMapper;
-import com.example.userservice.model.Car;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.example.userservice.mappers;
 
+import com.example.model.Car;
 import com.example.userservice.controller.RegisterCarRequest;
-import com.example.userservice.model.Car;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

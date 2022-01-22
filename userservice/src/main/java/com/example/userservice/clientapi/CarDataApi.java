@@ -1,6 +1,6 @@
 package com.example.userservice.clientapi;
 
-import com.example.userservice.model.Car;
+import com.example.model.Car;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;

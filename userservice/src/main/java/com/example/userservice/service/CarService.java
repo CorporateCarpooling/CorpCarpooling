@@ -1,7 +1,7 @@
 package com.example.userservice.service;
 
+import com.example.model.Car;
 import com.example.userservice.clientapi.CarDataApi;
-import com.example.userservice.model.Car;
 import lombok.AllArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
