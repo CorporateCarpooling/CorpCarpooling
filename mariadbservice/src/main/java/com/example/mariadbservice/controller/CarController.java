@@ -25,7 +25,7 @@ public class CarController {
 
     @GetMapping("car")
     public ResponseEntity<Car> getCar(@RequestParam String registrationNumber) {
-       Car car = carService.getCarByRegistrationNumber(registrationNumber);
+        Car car = carService.getCarByRegistrationNumber(registrationNumber);
         return ResponseEntity.ok(car);
     }
     @PatchMapping("car/update")
@@ -34,4 +34,10 @@ public class CarController {
         carService.updateCar(car);
         return ResponseEntity.ok(car);
     }
+    @DeleteMapping("car/delete")
+    public ResponseEntity<String> deleteCar(@RequestParam String regNumber)  {
+        carService.deleteCarByRegistrationNumber(regNumber);
+        return ResponseEntity.ok("Car deleted");
+    }
+
 }

@@ -17,6 +17,7 @@ public class CarService {
     private final CarDataApi carDataApi;
 
     public void registerCar(Car car) {
+
         Optional<Car> carInDatabase = carDataApi.getCarByRegistrationNumber(car.getRegistrationNumber());
 
         if (carInDatabase.isPresent()) {
@@ -47,6 +48,14 @@ public class CarService {
         } else {
             throw new RuntimeException("Car doesn't exist. Please register a car");
         }
+    }
+    public void deleteCar(String regNumber) {
+        Optional<Car> carInDatabase = carDataApi.getCarByRegistrationNumber(regNumber);
+
+        if (!carInDatabase.isPresent()) {
+            throw new RuntimeException("Car doesn't exist. Please register a car");
+        }
+        carDataApi.deleteCar(regNumber);
     }
 
 

@@ -11,6 +11,7 @@ import com.example.mariadbservice.repository.YearModelRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 
 
 @Service
@@ -50,6 +51,15 @@ public class CarService {
         return carRepository.save(carEntityFromDb).toString();
 
     }
+    public void deleteCarByRegistrationNumber(String registrationNumber) {
 
+        Optional<CarEntity> carInDatabase = Optional.ofNullable(carRepository.findByRegistrationNumber(registrationNumber));
+
+        if (!carInDatabase.isPresent()) {
+            throw new RuntimeException("Car doesn't exist. Please register a car");
+        }
+        carRepository.delete(carInDatabase.get());
+
+    }
 }
 
