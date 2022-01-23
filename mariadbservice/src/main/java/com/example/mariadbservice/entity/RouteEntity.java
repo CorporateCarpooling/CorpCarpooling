@@ -16,9 +16,9 @@ public class RouteEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private LocationEntity startPointId;
+    private LocationEntity startPoint;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private LocationEntity finishPointId;
+    private LocationEntity finishPoint;
 
 }

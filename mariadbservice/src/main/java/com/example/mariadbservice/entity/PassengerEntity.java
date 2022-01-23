@@ -17,5 +17,7 @@ public class PassengerEntity {
     @OneToOne(fetch = FetchType.EAGER)
     private UserEntity user;
 
+    private Boolean approved;
+
 }
 

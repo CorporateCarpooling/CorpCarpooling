@@ -45,6 +45,7 @@ public abstract class UserMapper {
                 .collect(Collectors.toList());
     }
 
+    //TODO: Should be in Service
     private RoleEntity findOrCreateRole(Role role) {
         RoleEntity roleEntity = roleRepository.findByName(role.name());
         if (roleEntity == null) {
