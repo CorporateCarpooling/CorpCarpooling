@@ -35,8 +35,8 @@ services:
     environment:
       MARIADBSERVICE_HOST: mariadbservice
 
-  carservice:
-    image: carservice
+  carpoolservice:
+    image: carpoolservice
     build: .
     restart: always
     ports:
