@@ -35,4 +35,10 @@ public class CarController {
         carService.updateCar(car, carRequest.getUserId());
         return ResponseEntity.ok(car);
     }
+    @DeleteMapping("car/delete")
+    public ResponseEntity<String> deleteCar(@RequestParam String regNumber)  {
+        carService.deleteCarByRegistrationNumber(regNumber);
+        return ResponseEntity.ok("Car deleted");
+    }
+
 }

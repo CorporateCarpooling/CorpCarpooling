@@ -29,5 +29,4 @@ public class CarEntity {
     private FuelType fuelType;
 
     private int availableSeats;
-
 }

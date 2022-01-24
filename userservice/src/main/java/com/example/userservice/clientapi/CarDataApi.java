@@ -29,7 +29,6 @@ public class CarDataApi {
                         .build())
                 .retrieve()
                 .bodyToMono(Car.class);
-
         return Optional.ofNullable(carInDatabase.block());
     }
 
@@ -44,7 +43,6 @@ public class CarDataApi {
                 .retrieve()
                 .bodyToMono(String.class);
         String response = postResponse.block();
-
     }
 
     public Optional<Car> updateCar(CarRequest car) {
@@ -57,6 +55,17 @@ public class CarDataApi {
                 .bodyToMono(Car.class);
         return Optional.ofNullable(carToUpdate.block());
     }
+    public void deleteCar(String regNumber) {
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
+        Mono<String> postResponse = webClient.delete()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/car/delete")
+                        .queryParam("regNumber", regNumber)
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class);
+        String response = postResponse.block();
+    }
 
 }
