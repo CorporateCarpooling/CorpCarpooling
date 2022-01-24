@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(imports = {UserEntity.class, User.class}, uses= {UserEntity.class, User.class}, componentModel = "spring")
+@Mapper(imports = {UserEntity.class, User.class}, componentModel = "spring")
 public abstract class UserMapper {
 
     @Autowired

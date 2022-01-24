@@ -1,5 +1,6 @@
 package com.example.mariadbservice.entity;
 
+import com.example.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,4 +30,7 @@ public class CarpoolEntity {
 
     private int availableSeatsForRide;
     private double pricePerRide;
+
+    @ManyToOne
+    private UserEntity driver;
 }

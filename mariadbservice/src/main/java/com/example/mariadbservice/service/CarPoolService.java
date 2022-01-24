@@ -1,18 +1,14 @@
 package com.example.mariadbservice.service;
 
-import com.example.mariadbservice.entity.CarpoolEntity;
-import com.example.mariadbservice.entity.CityEntity;
-import com.example.mariadbservice.entity.LocationEntity;
-import com.example.mariadbservice.entity.RouteEntity;
+import com.example.mariadbservice.entity.*;
 import com.example.mariadbservice.mappers.CarPoolMapper;
-import com.example.mariadbservice.repository.CarPoolRepository;
-import com.example.mariadbservice.repository.CityRepository;
-import com.example.mariadbservice.repository.LocationRepository;
-import com.example.mariadbservice.repository.RouteRepository;
+import com.example.mariadbservice.repository.*;
 import com.example.model.Carpool;
-import com.example.model.City;
+import com.example.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -23,8 +19,15 @@ public class CarPoolService {
     private final CityRepository cityRepository;
     private final LocationRepository locationRepository;
     private final RouteRepository routeRepository;
+    private final UserRepository userRepository;
 
-    public Long create(Carpool carpool) {
+    public Long create(Carpool carpool, Long driverUserId) {
+        Optional<UserEntity> user = userRepository.findById(driverUserId);
+
+        if(!user.isPresent()){
+            throw new RuntimeException("No user found");
+        }
+
         CarpoolEntity carPoolEntity = carPoolMapper.carpoolToCarpoolDto(carpool);
         RouteEntity routeEntity = carPoolEntity.getRoute();
 
@@ -38,6 +41,8 @@ public class CarPoolService {
         routeEntity.setFinishPoint(getDatabaseLocation(routeEntity.getFinishPoint()));
 
         carPoolEntity.setRoute(getDatabaseRoute(carPoolEntity.getRoute()));
+
+        carPoolEntity.setDriver(user.get());
 
         return carPoolRepository.save(carPoolEntity).getId();
     }

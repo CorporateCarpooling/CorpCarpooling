@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @Slf4j
 @AllArgsConstructor
 @RestController
@@ -17,22 +19,22 @@ public class CarController {
     private final CarMapper carMapper;
 
     @PostMapping("/car/register")
-    public ResponseEntity<String> registerCar(@RequestBody RegisterCarRequest registerCarRequest) {
+    public ResponseEntity<String> registerCar(Principal principal, @RequestBody RegisterCarRequest registerCarRequest) {
         Car car = carMapper.dtoToCar(registerCarRequest);
-        carService.registerCar(car);
+        carService.registerCar(car, Long.parseLong(principal.getName()));
         return ResponseEntity.ok("Car registered");
     }
 
     @PatchMapping("/car/update")
-    public ResponseEntity<String> updateCar(@RequestBody RegisterCarRequest registerCarRequest) {
+    public ResponseEntity<String> updateCar(Principal principal, @RequestBody RegisterCarRequest registerCarRequest) {
         Car car = carMapper.dtoToCar(registerCarRequest);
-        carService.updateCar(car);
+        carService.updateCar(car, Long.parseLong(principal.getName()));
         return ResponseEntity.ok("Car updated");
     }
 
     @GetMapping("/car/getbyregnumber")
-    public ResponseEntity<Car> getCar(@RequestParam String regNumber) {
-        Car car = carService.getCar(regNumber);
+    public ResponseEntity<Car> getCar(Principal principal, @RequestParam String regNumber) {
+        Car car = carService.getCar(regNumber, Long.parseLong(principal.getName()));
         return ResponseEntity.ok(car);
     }
 }

@@ -2,7 +2,7 @@ package com.example.carpoolservice.clientapi;
 
 import com.example.model.Carpool;
 import com.example.model.Route;
-import com.example.model.User;
+import com.example.request.CarPoolRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class RouteApi {
         return Optional.ofNullable(carPoolInDatabase.block());
     }
 
-    public Optional<Route> getRouteByFinishPoint(String finishPoint) {
+/*    public Optional<Route> getRouteByFinishPoint(String finishPoint) {
 
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
@@ -43,16 +43,16 @@ public class RouteApi {
                 .retrieve()
                 .bodyToMono(Route.class);
         return Optional.ofNullable(routeInDatabase.block());
-    }
+    }*/
 
-    public void postRoute(Carpool carpool) {
+    public void postRoute(CarPoolRequest carPoolRequest) {
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
         Mono<String> postResponse = webClient.post()
                 .uri(uriBuilder -> uriBuilder
                         .path("/carpool/ride")
                         .build())
-                .bodyValue(carpool)
+                .bodyValue(carPoolRequest)
                 .retrieve()
                 .bodyToMono(String.class);
         String response = postResponse.block();

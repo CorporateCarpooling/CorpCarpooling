@@ -1,4 +1,4 @@
-package com.example.mariadbservice.controller;
+package com.example.request;
 
 import com.example.model.Car;
 import com.example.model.Passenger;
@@ -18,5 +18,6 @@ public class CarPoolRequest {
     private int availableSeatsForRide;
     private double pricePerRide;
 
+    private Long driverUserId;
 
 }

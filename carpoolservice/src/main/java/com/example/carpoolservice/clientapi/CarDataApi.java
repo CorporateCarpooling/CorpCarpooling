@@ -1,7 +1,6 @@
-package com.example.userservice.clientapi;
+package com.example.carpoolservice.clientapi;
 
 import com.example.model.Car;
-import com.example.request.CarRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
@@ -32,31 +31,5 @@ public class CarDataApi {
 
         return Optional.ofNullable(carInDatabase.block());
     }
-
-    public void postCar(CarRequest car) {
-        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
-
-        Mono<String> postResponse = webClient.post()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/car/register")
-                        .build())
-                .bodyValue(car)
-                .retrieve()
-                .bodyToMono(String.class);
-        String response = postResponse.block();
-
-    }
-
-    public Optional<Car> updateCar(CarRequest car) {
-        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
-
-        Mono<Car> carToUpdate = webClient.patch()
-                .uri("/car/update")
-                .body(Mono.just(car), Car.class)
-                .retrieve()
-                .bodyToMono(Car.class);
-        return Optional.ofNullable(carToUpdate.block());
-    }
-
 
 }

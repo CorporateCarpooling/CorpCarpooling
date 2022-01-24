@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +22,9 @@ public class CarPoolController {
     private CarPoolMapper carPoolMapper;
 
     @PostMapping("/route/register")
-    public ResponseEntity<String> registerRoute(@RequestBody RegisterRouteRequest registerRouteRequest) {
+    public ResponseEntity<String> registerRoute(Principal principal, @RequestBody RegisterRouteRequest registerRouteRequest) {
         Carpool carpool = carPoolMapper.dtoToCarPool(registerRouteRequest);
-        carPoolService.registerRoute(carpool);
+        carPoolService.registerRoute(carpool, registerRouteRequest.getRegistrationNumber(), Long.parseLong(principal.getName()));
         return ResponseEntity.ok("Route registered");
     }
 

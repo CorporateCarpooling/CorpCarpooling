@@ -1,15 +1,12 @@
 package com.example.mariadbservice.mappers;
 
-import com.example.mariadbservice.controller.CarPoolRequest;
-import com.example.mariadbservice.controller.UserRequest;
+import com.example.request.CarPoolRequest;
 import com.example.mariadbservice.entity.CarpoolEntity;
 import com.example.mariadbservice.entity.PassengerEntity;
 import com.example.mariadbservice.repository.CarRepository;
 import com.example.model.Car;
 import com.example.model.Carpool;
 import com.example.model.Passenger;
-import com.example.model.User;
-import lombok.AllArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
