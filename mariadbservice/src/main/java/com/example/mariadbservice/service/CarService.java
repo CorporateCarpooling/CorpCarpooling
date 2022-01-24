@@ -14,6 +14,7 @@ import com.example.model.Car;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -45,6 +46,7 @@ public class CarService {
 
         UserEntity userEntity = userRepository.getById(userId);
         userEntity.getCars().add(carEntity);
+        carEntity.setUser(userEntity);
 
         userRepository.save(userEntity);
     }
@@ -78,5 +80,21 @@ public class CarService {
 
     }
 
+    public void deleteCarByRegistrationNumber(String regNumber, Long userId) {
+        UserEntity userEntity = userRepository.getById(userId);
+
+        Optional<CarEntity> carToRemove = userEntity.getCars().stream().
+                filter(carEntity -> carEntity.getRegistrationNumber().equals(regNumber)).
+                findFirst();
+
+        if (!carToRemove.isPresent()) {
+            throw new RuntimeException("Car doesn't exist. Please register a car");
+        }
+
+        //TODO*: Ta bort alla carpools som använder bilen som ska tas bort
+
+        userEntity.getCars().remove(carToRemove);
+        userRepository.delete(userEntity);
+    }
 }
 

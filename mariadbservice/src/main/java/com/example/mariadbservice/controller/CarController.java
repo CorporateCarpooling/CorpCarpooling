@@ -36,8 +36,8 @@ public class CarController {
         return ResponseEntity.ok(car);
     }
     @DeleteMapping("car/delete")
-    public ResponseEntity<String> deleteCar(@RequestParam String regNumber)  {
-        carService.deleteCarByRegistrationNumber(regNumber);
+    public ResponseEntity<String> deleteCar(@RequestParam String regNumber, @RequestParam Long userId)  {
+        carService.deleteCarByRegistrationNumber(regNumber, userId);
         return ResponseEntity.ok("Car deleted");
     }
 

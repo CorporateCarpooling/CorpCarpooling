@@ -2,6 +2,7 @@ package com.example.mariadbservice.entity;
 
 
 import com.example.model.FuelType;
+import com.example.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,4 +30,7 @@ public class CarEntity {
     private FuelType fuelType;
 
     private int availableSeats;
+
+    @ManyToOne
+    private UserEntity user;
 }

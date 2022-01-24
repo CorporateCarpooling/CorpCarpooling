@@ -20,7 +20,7 @@ public class UserEntity {
      private String email;
      private String password;
      @LazyCollection(LazyCollectionOption.FALSE)
-     @OneToMany(cascade = CascadeType.ALL)
+     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
      private List<CarEntity> cars;
      @LazyCollection(LazyCollectionOption.FALSE)
      @ManyToMany
