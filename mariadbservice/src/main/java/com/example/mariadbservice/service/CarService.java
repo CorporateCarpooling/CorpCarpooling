@@ -92,6 +92,7 @@ public class CarService {
         }
 
         //TODO*: Ta bort alla carpools som använder bilen som ska tas bort
+        //TODO*: Ta bort bilen men inte användaren
 
         userEntity.getCars().remove(carToRemove);
         userRepository.delete(userEntity);

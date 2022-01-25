@@ -4,11 +4,13 @@ import com.example.mariadbservice.entity.*;
 import com.example.mariadbservice.mappers.CarPoolMapper;
 import com.example.mariadbservice.repository.*;
 import com.example.model.Carpool;
-import com.example.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +26,7 @@ public class CarPoolService {
     public Long create(Carpool carpool, Long driverUserId) {
         Optional<UserEntity> user = userRepository.findById(driverUserId);
 
-        if(!user.isPresent()){
+        if (!user.isPresent()) {
             throw new RuntimeException("No user found");
         }
 
@@ -49,7 +51,7 @@ public class CarPoolService {
 
     private RouteEntity getDatabaseRoute(RouteEntity route) {
         RouteEntity routeInDB = routeRepository.findByStartPointAndFinishPoint(route.getStartPoint(), route.getFinishPoint());
-        if(routeInDB == null){
+        if (routeInDB == null) {
             return routeRepository.save(route);
         }
         return routeInDB;
@@ -57,7 +59,7 @@ public class CarPoolService {
 
     private LocationEntity getDatabaseLocation(LocationEntity location) {
         LocationEntity locationInDB = locationRepository.findByAddressAndCity(location.getAddress(), location.getCity());
-        if(locationInDB == null){
+        if (locationInDB == null) {
             return locationRepository.save(location);
         }
         return locationInDB;
@@ -65,9 +67,17 @@ public class CarPoolService {
 
     private CityEntity getDatabaseCity(CityEntity city) {
         CityEntity cityInDB = cityRepository.findByCityName(city.getCityName());
-        if(cityInDB == null){
+        if (cityInDB == null) {
             return cityRepository.save(city);
         }
         return cityInDB;
+    }
+
+    public List<Carpool> getCarPoolByDate(LocalDateTime departureTime, LocalDateTime latestDepartureTime) {
+        // UserEntity userEntity = userRepository.getById(userId);
+        List<CarpoolEntity> carpoolEntities = carPoolRepository.findAllByDepartureTimeGreaterThanAndDepartureTimeLessThan(departureTime, latestDepartureTime);
+        List<Carpool> carpools = carpoolEntities.stream().map(carPoolMapper::dtoToCarpool).collect(Collectors.toList());
+        return carpools;
+
     }
 }
