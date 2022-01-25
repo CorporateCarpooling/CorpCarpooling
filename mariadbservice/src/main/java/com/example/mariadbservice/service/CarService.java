@@ -13,10 +13,9 @@ import com.example.mariadbservice.repository.YearModelRepository;
 import com.example.model.Car;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 
 @Service
 @AllArgsConstructor
@@ -62,9 +61,6 @@ public class CarService {
                                 throw new RuntimeException("No such Car registered for user.");
                         }
                 );
-
-//        CarEntity carEntity = carRepository.findByRegistrationNumber(registrationNumber);
-//        return carMapper.dtoToCar(carEntity);
     }
 
     public void updateCar(Car car, Long userId) {
@@ -74,12 +70,11 @@ public class CarService {
                 filter(carEntity -> carEntity.getRegistrationNumber().equals(car.getRegistrationNumber())).
                 forEach(carEntity -> carEntity.setAvailableSeats(car.getAvailableSeats()));
 
-//        CarEntity carEntityFromDb = carRepository.findByRegistrationNumber(car.getRegistrationNumber());
-//        carEntityFromDb.setAvailableSeats(car.getAvailableSeats());
         userRepository.save(userEntity);
 
     }
 
+    @Transactional
     public void deleteCarByRegistrationNumber(String regNumber, Long userId) {
         UserEntity userEntity = userRepository.getById(userId);
 
@@ -92,10 +87,9 @@ public class CarService {
         }
 
         //TODO*: Ta bort alla carpools som använder bilen som ska tas bort
-        //TODO*: Ta bort bilen men inte användaren
 
-        userEntity.getCars().remove(carToRemove);
-        userRepository.delete(userEntity);
+        userEntity.getCars().remove(carToRemove.get());
+        userRepository.saveAndFlush(userEntity);
     }
 }
 

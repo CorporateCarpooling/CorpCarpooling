@@ -28,9 +28,10 @@ public class CarPoolController {
         return ResponseEntity.ok("Route registered");
     }
 
-    @GetMapping("/route")
-    public ResponseEntity<List<Route>> getRoutes(@RequestParam String fromPoint, @RequestParam String toPoint) {
-        return ResponseEntity.ok(new ArrayList<>());
+    @GetMapping("/carpools")
+    public ResponseEntity<List<Carpool>> getAllCarPools(@RequestParam(required = false) String earliestDepartureTime, @RequestParam(required = false) String latestDepartureTime) {
+       List<Carpool> carpools = carPoolService.getCarPools(earliestDepartureTime, latestDepartureTime);
+        return ResponseEntity.ok(carpools);
     }
 
 
