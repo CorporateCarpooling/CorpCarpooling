@@ -1,8 +1,9 @@
 package com.example.mariadbservice.entity;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,6 +19,11 @@ public class UserEntity {
      private String name;
      private String email;
      private String password;
-     @ManyToMany(fetch = FetchType.EAGER)
+     @LazyCollection(LazyCollectionOption.FALSE)
+     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+     private List<CarEntity> cars;
+     @LazyCollection(LazyCollectionOption.FALSE)
+     @ManyToMany
+     @Enumerated(EnumType.STRING)
      private List<RoleEntity> roles;
 }

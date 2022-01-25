@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(imports = {UserEntity.class, User.class}, uses= {UserEntity.class, User.class}, componentModel = "spring")
+@Mapper(imports = {UserEntity.class, User.class}, componentModel = "spring")
 public abstract class UserMapper {
 
     @Autowired
@@ -45,6 +45,7 @@ public abstract class UserMapper {
                 .collect(Collectors.toList());
     }
 
+    //TODO: Should be in Service
     private RoleEntity findOrCreateRole(Role role) {
         RoleEntity roleEntity = roleRepository.findByName(role.name());
         if (roleEntity == null) {

@@ -1,11 +1,10 @@
 package com.example.mariadbservice.controller;
 
-import com.example.mariadbservice.domain.UserService;
+import com.example.mariadbservice.service.UserService;
 import com.example.mariadbservice.mappers.UserMapperImpl;
 import com.example.mariadbservice.repository.RoleRepository;
 import com.example.model.Role;
 import com.example.model.User;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

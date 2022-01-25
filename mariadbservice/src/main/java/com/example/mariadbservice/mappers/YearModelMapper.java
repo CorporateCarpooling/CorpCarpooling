@@ -1,8 +1,6 @@
 
 package com.example.mariadbservice.mappers;
 
-import com.example.mariadbservice.entity.YearModelEntity;
-import com.example.mariadbservice.model.YearModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

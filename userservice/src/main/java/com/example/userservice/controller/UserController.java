@@ -2,7 +2,7 @@ package com.example.userservice.controller;
 
 import com.example.model.User;
 import com.example.securityconfig.config.TokenProvider;
-import com.example.userservice.domain.UserService;
+import com.example.userservice.service.UserService;
 import com.example.userservice.mappers.UserMapper;
 import com.example.userservice.model.AuthToken;
 import com.example.userservice.model.LoginUser;
@@ -59,7 +59,7 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public ResponseEntity<?> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
+    public ResponseEntity<AuthToken> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

@@ -1,8 +1,9 @@
 package com.example.mariadbservice.mappers;
 
-import com.example.mariadbservice.controller.CarRequest;
+import com.example.request.CarRequest;
 import com.example.mariadbservice.entity.CarEntity;
-import com.example.mariadbservice.model.Car;
+
+import com.example.model.Car;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

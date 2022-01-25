@@ -1,6 +1,7 @@
 package com.example.userservice.clientapi;
 
-import com.example.userservice.model.Car;
+import com.example.model.Car;
+import com.example.request.CarRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
@@ -16,7 +17,7 @@ import java.util.Optional;
 public class CarDataApi {
     private final Environment environment;
 
-    public Optional<Car> getCarByRegistrationNumber(String registrationNumber) {
+    public Optional<Car> getCarByRegistrationNumber(String registrationNumber, Long userId) {
 
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
@@ -24,13 +25,14 @@ public class CarDataApi {
                 .uri(uriBuilder -> uriBuilder
                         .path("/car")
                         .queryParam("registrationNumber", registrationNumber)
+                        .queryParam("userId", userId)
                         .build())
                 .retrieve()
                 .bodyToMono(Car.class);
         return Optional.ofNullable(carInDatabase.block());
     }
 
-    public void postCar(Car car) {
+    public void postCar(CarRequest car) {
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
         Mono<String> postResponse = webClient.post()
@@ -43,7 +45,7 @@ public class CarDataApi {
         String response = postResponse.block();
     }
 
-    public Optional<Car> updateCar(Car car) {
+    public Optional<Car> updateCar(CarRequest car) {
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
         Mono<Car> carToUpdate = webClient.patch()
@@ -53,13 +55,14 @@ public class CarDataApi {
                 .bodyToMono(Car.class);
         return Optional.ofNullable(carToUpdate.block());
     }
-    public void deleteCar(String regNumber) {
+    public void deleteCar(String regNumber, Long userId) {
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
         Mono<String> postResponse = webClient.delete()
                 .uri(uriBuilder -> uriBuilder
                         .path("/car/delete")
                         .queryParam("regNumber", regNumber)
+                        .queryParam("userId", userId)
                         .build())
                 .retrieve()
                 .bodyToMono(String.class);

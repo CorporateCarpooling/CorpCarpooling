@@ -11,4 +11,5 @@ public class User {
   private String email;
   private String password;
   private List<Role> roles;
+  private List<Car> cars;
 }

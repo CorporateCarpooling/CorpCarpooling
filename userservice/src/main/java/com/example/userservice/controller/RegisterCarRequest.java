@@ -1,7 +1,7 @@
 package com.example.userservice.controller;
 
-import com.example.userservice.model.CarBrand;
-import com.example.userservice.model.YearModel;
+import com.example.model.CarBrand;
+import com.example.model.YearModel;
 import lombok.Data;
 
 @Data

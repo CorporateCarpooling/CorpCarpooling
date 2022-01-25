@@ -17,5 +17,4 @@ public class CarBrandEntity {
 
     private String brandName;
 
-
 }

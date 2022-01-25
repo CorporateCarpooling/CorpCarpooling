@@ -37,7 +37,7 @@ public class SecurityApi implements UserDetailsService {
         return Optional.ofNullable(userInDatabase.block());
     }
 
-    private Optional<User> getUserById(String id) {
+    public Optional<User> getUserById(String id) {
         // https://dzone.com/articles/resttemplate-vs-webclient
         // Tror man bör försöka använda webClient för att prata med mariadbService container.
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
