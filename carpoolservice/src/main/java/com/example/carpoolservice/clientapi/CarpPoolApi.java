@@ -7,13 +7,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class RouteApi {
+public class CarpPoolApi {
 
     private Environment environment;
 
@@ -31,20 +33,6 @@ public class RouteApi {
         return Optional.ofNullable(carPoolInDatabase.block());
     }
 
-/*    public Optional<Route> getRouteByFinishPoint(String finishPoint) {
-
-        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
-
-        Mono<Route> routeInDatabase = webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/route")
-                        .queryParam("finish", finishPoint)
-                        .build())
-                .retrieve()
-                .bodyToMono(Route.class);
-        return Optional.ofNullable(routeInDatabase.block());
-    }*/
-
     public void postRoute(CarPoolRequest carPoolRequest) {
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
@@ -57,4 +45,19 @@ public class RouteApi {
                 .bodyToMono(String.class);
         String response = postResponse.block();
     }
+
+    public List<Carpool> getCarPoolByDate(String earliestDepartureTimeLocalDateTime, String latestDepartureTimeLocalDateTime) {
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+
+        Flux<Carpool> carpoolsInDataBase = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("carpool/getcarpools")
+                        .queryParamIfPresent("earliestDepartureTime", Optional.ofNullable(earliestDepartureTimeLocalDateTime))
+                        .queryParamIfPresent("latestDepartureTime", Optional.ofNullable(latestDepartureTimeLocalDateTime))
+                        .build())
+                .retrieve()
+                .bodyToFlux(Carpool.class);
+        return carpoolsInDataBase.collectList().block();
+    }
+
 }

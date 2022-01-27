@@ -7,9 +7,10 @@ import com.example.request.CarPoolRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -25,6 +26,14 @@ public class CarPoolController {
        // if(carPoolMapper.carpoolToCarpoolDto(carpoolEntity.getPassengers()== null))
 
         return new ResponseEntity<>(Long.toString(id), HttpStatus.OK);
+    }
+
+    @GetMapping("carpool/getcarpools")
+    public ResponseEntity<List<Carpool>> getAllRides(@RequestParam(required = false) String earliestDepartureTime, @RequestParam(required = false) String latestDepartureTime){
+        LocalDateTime earliestDepartureTimeLocalDateTime = earliestDepartureTime == null ? LocalDateTime.now() : LocalDateTime.parse(earliestDepartureTime);
+        LocalDateTime latestDepartureTimeLocalDateTime = latestDepartureTime == null ? LocalDateTime.now().plusWeeks(1) : LocalDateTime.parse(latestDepartureTime);
+        List<Carpool> carpool= carPoolService.getCarPoolByDate(earliestDepartureTimeLocalDateTime, latestDepartureTimeLocalDateTime);
+        return ResponseEntity.ok(carpool);
     }
 
 }
