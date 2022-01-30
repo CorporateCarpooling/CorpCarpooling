@@ -33,11 +33,11 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping ("/user/register")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterUserRequest registerUserRequest) {
+    public ResponseEntity<User> registerUser(@Valid @RequestBody RegisterUserRequest registerUserRequest) {
         log.info("user registration{}", registerUserRequest);
         User user = userMapper.toUser(registerUserRequest);
         userService.registerCustomer(user);
-        return ResponseEntity.ok("User Registered.");
+        return ResponseEntity.ok(user);
     }
 
     @PreAuthorize("hasRole('USER')")
