@@ -21,11 +21,11 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CarService {
 
-    CarRepository carRepository;
-    CarBrandRepository carBrandRepository;
-    YearModelRepository yearModelRepository;
-    UserRepository userRepository;
-    private CarMapper carMapper;
+   private CarRepository carRepository;
+   private CarBrandRepository carBrandRepository;
+   private YearModelRepository yearModelRepository;
+   private UserRepository userRepository;
+   private CarMapper carMapper;
 
 
     public void createCar(Car car, Long userId) {

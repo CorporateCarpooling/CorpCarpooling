@@ -35,5 +35,11 @@ public class CarPoolController {
         List<Carpool> carpool= carPoolService.getCarPoolByDate(earliestDepartureTimeLocalDateTime, latestDepartureTimeLocalDateTime);
         return ResponseEntity.ok(carpool);
     }
+    @GetMapping("carpool/getcarpool")
+    public ResponseEntity<Carpool>getCarPoolbyId(@RequestParam (required = false)Long carpoolId){
+        Carpool carpool = carPoolService.getCarpoolById(carpoolId);
+        return ResponseEntity.ok(carpool);
+
+    }
 
 }

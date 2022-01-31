@@ -4,6 +4,7 @@ import com.example.mariadbservice.entity.*;
 import com.example.mariadbservice.mappers.CarPoolMapper;
 import com.example.mariadbservice.repository.*;
 import com.example.model.Carpool;
+import com.example.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -79,5 +80,14 @@ public class CarPoolService {
         List<Carpool> carpools = carpoolEntities.stream().map(carPoolMapper::dtoToCarpool).collect(Collectors.toList());
         return carpools;
 
+    }
+
+    public Carpool getCarpoolById(Long carpoolId) {
+        Optional<CarpoolEntity> carpoolEntity= carPoolRepository.findById(carpoolId);
+        if(!carpoolEntity.isPresent()){
+            throw new RuntimeException("There is no carpool");
+        }
+        Carpool carpool = carPoolMapper.dtoToCarpool(carpoolEntity.get());
+        return carpool;
     }
 }

@@ -8,6 +8,7 @@ public class Passenger {
 
     private Long id;
     private User user;
+    private Carpool carpool;
     private Boolean approved;
 
 }

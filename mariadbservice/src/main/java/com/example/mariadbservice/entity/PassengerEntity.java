@@ -16,6 +16,8 @@ public class PassengerEntity {
     private Long id;
     @OneToOne(fetch = FetchType.EAGER)
     private UserEntity user;
+    @ManyToOne(fetch = FetchType.EAGER)//??
+    private CarpoolEntity carpool;
 
     private Boolean approved;
 
