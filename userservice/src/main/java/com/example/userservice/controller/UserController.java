@@ -32,28 +32,29 @@ public class UserController {
 
     private AuthenticationManager authenticationManager;
 
-    @PostMapping ("/user/register")
-    public ResponseEntity<User> registerUser(@Valid @RequestBody RegisterUserRequest registerUserRequest) {
+    @PostMapping("/user/register")
+    public ResponseEntity<Response> registerUser(@Valid @RequestBody RegisterUserRequest registerUserRequest) {
         log.info("user registration{}", registerUserRequest);
         User user = userMapper.toUser(registerUserRequest);
         userService.registerCustomer(user);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(new Response("User registered successfully"));
     }
 
     @PreAuthorize("hasRole('USER')")
-    @PostMapping ("/user/update")
+    @PostMapping("/user/update")
     public ResponseEntity<String> updateUser(Principal principal, @Valid @RequestBody UpdateUserRequest updateUserRequest) {
         User user = userMapper.toUser(updateUserRequest);
         user.setId(Long.parseLong(principal.getName()));
         userService.updateCustomer(user);
         return ResponseEntity.ok("User Updated.");
     }
-   // @PreAuthorize("hasRole('ADMIN')")
+
+    // @PreAuthorize("hasRole('ADMIN')")
     @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/user/delete")
     public ResponseEntity<String> DeleteUser(Principal principal, @RequestParam String id) {
-       // User user = userMapper.toUser(registerUserRequest);
-       // user.setId(Long.parseLong(principal.getName()));
+        // User user = userMapper.toUser(registerUserRequest);
+        // user.setId(Long.parseLong(principal.getName()));
         userService.deleteCustomer(id);
         return ResponseEntity.ok("User deleted.");
     }
@@ -74,10 +75,8 @@ public class UserController {
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/user/ping")
-    public ResponseEntity<String> ping(){
+    public ResponseEntity<String> ping() {
         return ResponseEntity.ok("pong");
     }
-
-
 
 }
