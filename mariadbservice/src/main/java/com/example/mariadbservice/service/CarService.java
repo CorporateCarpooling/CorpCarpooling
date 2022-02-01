@@ -15,7 +15,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -26,7 +28,6 @@ public class CarService {
     YearModelRepository yearModelRepository;
     UserRepository userRepository;
     private CarMapper carMapper;
-
 
     public void createCar(Car car, Long userId) {
 
@@ -58,9 +59,15 @@ public class CarService {
                 map(carMapper::dtoToCar).
                 orElseThrow(
                         () -> {
-                                throw new RuntimeException("No such Car registered for user.");
+                            throw new RuntimeException("No such Car registered for user.");
                         }
                 );
+    }
+
+    public List<Car> getAllCars(Long userId) {
+        UserEntity userEntity = userRepository.getById(userId);
+        return userEntity.getCars().stream()
+                .map(carMapper::dtoToCar).collect(Collectors.toList());
     }
 
     public void updateCar(Car car, Long userId) {
@@ -86,10 +93,12 @@ public class CarService {
             throw new RuntimeException("Car doesn't exist. Please register a car");
         }
 
-        //TODO*: Ta bort alla carpools som använder bilen som ska tas bort
+        /**
+         * TODO*: Ta bort alla carpools som använder bilen som ska tas bort , Om annan User använder samma bil?
+         */
 
         userEntity.getCars().remove(carToRemove.get());
         userRepository.saveAndFlush(userEntity);
     }
-}
 
+}

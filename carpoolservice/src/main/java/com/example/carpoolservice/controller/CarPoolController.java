@@ -3,14 +3,12 @@ package com.example.carpoolservice.controller;
 import com.example.carpoolservice.mappers.CarPoolMapper;
 import com.example.carpoolservice.service.CarPoolService;
 import com.example.model.Carpool;
-import com.example.model.Route;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -30,9 +28,8 @@ public class CarPoolController {
 
     @GetMapping("/carpools")
     public ResponseEntity<List<Carpool>> getAllCarPools(@RequestParam(required = false) String earliestDepartureTime, @RequestParam(required = false) String latestDepartureTime) {
-       List<Carpool> carpools = carPoolService.getCarPools(earliestDepartureTime, latestDepartureTime);
+        List<Carpool> carpools = carPoolService.getCarPools(earliestDepartureTime, latestDepartureTime);
         return ResponseEntity.ok(carpools);
     }
-
 
 }
