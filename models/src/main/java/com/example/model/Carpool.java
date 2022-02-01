@@ -10,6 +10,7 @@ import java.util.List;
 public class Carpool {
 
     private Long id;
+    private Long driverId;
     private Car car;
     private Route route;
     private List<Passenger> passengers;

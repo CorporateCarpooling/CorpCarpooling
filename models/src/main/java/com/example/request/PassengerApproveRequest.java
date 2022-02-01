@@ -1,4 +1,4 @@
-package com.example.mariadbservice.controller;
+package com.example.request;
 
 import lombok.Data;
 

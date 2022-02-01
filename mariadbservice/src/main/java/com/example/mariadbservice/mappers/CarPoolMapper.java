@@ -37,6 +37,7 @@ public abstract class CarPoolMapper {
    public abstract CarpoolEntity carpoolToCarpoolDto(Carpool carPool);
 
    @Mapping(target = "passengers", expression = "java(toPassenger(carPoolEntity.getPassengers()))")
+   @Mapping(target = "driverId", source = "carPoolEntity.driver.id")
    public abstract Carpool dtoToCarpool(CarpoolEntity carPoolEntity);
 
    @Mapping(target = "car", expression = "java(getCarFromId(carPoolRequest.getCarId()))")

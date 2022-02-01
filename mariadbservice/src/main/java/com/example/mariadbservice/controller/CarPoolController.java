@@ -3,6 +3,7 @@ package com.example.mariadbservice.controller;
 import com.example.mariadbservice.mappers.CarPoolMapper;
 import com.example.mariadbservice.service.CarPoolService;
 import com.example.model.Carpool;
+import com.example.model.Passenger;
 import com.example.request.CarPoolRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,11 @@ public class CarPoolController {
         Carpool carpool = carPoolService.getCarpoolById(carpoolId);
         return ResponseEntity.ok(carpool);
 
+    }
+    @GetMapping("passenger/getpassenger")
+    public ResponseEntity<Passenger>getPassengerbyId(@RequestParam (required = false)Long passengerId) {
+        Passenger passenger = carPoolService.getPassengerById(passengerId);
+        return ResponseEntity.ok(passenger);
     }
 
 }

@@ -1,9 +1,11 @@
 package com.example.bookingservice.clientapi;
 
 import com.example.model.Carpool;
+import com.example.model.Passenger;
 import com.example.model.User;
 import com.example.request.CarPoolRequest;
 import com.example.request.JoinCarpoolRequest;
+import com.example.request.PassengerApproveRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class TripApi {
 
     private Environment environment;
 
-    public void joinATrip(long userId, long carpoolId) {
+    public void joinATrip(long carpoolId, long userId) {
         JoinCarpoolRequest joinCarpoolRequest = new JoinCarpoolRequest();
         joinCarpoolRequest.setCarpoolId(carpoolId);
         joinCarpoolRequest.setUserId(userId);
@@ -37,7 +39,6 @@ public class TripApi {
     public Optional<Carpool> getCarPoolById(Long carpoolId) {
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
-        //Kolla om användaren redan finns.
         Mono<Carpool> carpoolInDatabase = webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("carpool/getcarpool")
@@ -47,5 +48,32 @@ public class TripApi {
                 .bodyToMono(Carpool.class);
         return Optional.ofNullable(carpoolInDatabase.block());
     }
+    public Optional<Passenger> getPassengersById(Long passengerId) {
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
+        Mono<Passenger> passengerInDatabase = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("passenger/getpassenger")
+                        .queryParam("passengerId", passengerId)
+                        .build())
+                .retrieve()
+                .bodyToMono(Passenger.class);
+        return Optional.ofNullable(passengerInDatabase.block());
+    }
+
+    public void approvePassenger(Long passengerId) {
+        PassengerApproveRequest passengerApproveRequest= new PassengerApproveRequest();
+        passengerApproveRequest.setPassengerId(passengerId);
+
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+
+        Mono<String> postResponse = webClient.post()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/passenger/approve")
+                        .build())
+                .bodyValue(passengerApproveRequest)
+                .retrieve()
+                .bodyToMono(String.class);
+        String response = postResponse.block();
+    }
 }

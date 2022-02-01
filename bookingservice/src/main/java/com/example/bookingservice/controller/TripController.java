@@ -1,6 +1,7 @@
 package com.example.bookingservice.controller;
 
 import com.example.bookingservice.service.TripService;
+import com.example.request.PassengerApproveRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,11 @@ public class TripController {
     public ResponseEntity<String> joinCarpool(Principal principal, @RequestBody JoinCarpoolRequest joinCarpoolRequest){
         tripService.addPassengerToCarPool(Long.parseLong(principal.getName()),joinCarpoolRequest.getCarpoolId());
         return ResponseEntity.ok("request send");
+    }
+    @PostMapping("approve/passenger")
+    public ResponseEntity<String> approveCarpool(Principal principal, @RequestBody PassengerApproveRequest passengerApproveRequest){
+        tripService.approvePassengerRequest(passengerApproveRequest.getPassengerId(), Long.parseLong(principal.getName()));
+        return ResponseEntity.ok("Passenger request approved");
     }
 
 }

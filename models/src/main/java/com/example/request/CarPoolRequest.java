@@ -1,7 +1,5 @@
 package com.example.request;
 
-import com.example.model.Car;
-import com.example.model.Passenger;
 import com.example.model.Route;
 import lombok.Data;
 
