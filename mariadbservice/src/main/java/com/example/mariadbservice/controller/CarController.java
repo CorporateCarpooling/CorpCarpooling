@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -29,14 +30,22 @@ public class CarController {
         Car car = carService.getCarByRegistrationNumber(registrationNumber, userId);
         return ResponseEntity.ok(car);
     }
+
+    @GetMapping("car/list")
+    public ResponseEntity<List<Car>> getAllCars(@RequestParam Long userId) {
+        List<Car> cars = carService.getAllCars(userId);
+        return ResponseEntity.ok(cars);
+    }
+
     @PatchMapping("car/update")
-        public ResponseEntity<Car> updateCar(@RequestBody CarRequest carRequest) {
+    public ResponseEntity<Car> updateCar(@RequestBody CarRequest carRequest) {
         Car car = carMapper.dtoToCar(carRequest);
         carService.updateCar(car, carRequest.getUserId());
         return ResponseEntity.ok(car);
     }
+
     @DeleteMapping("car/delete")
-    public ResponseEntity<String> deleteCar(@RequestParam String regNumber, @RequestParam Long userId)  {
+    public ResponseEntity<String> deleteCar(@RequestParam String regNumber, @RequestParam Long userId) {
         carService.deleteCarByRegistrationNumber(regNumber, userId);
         return ResponseEntity.ok("Car deleted");
     }
