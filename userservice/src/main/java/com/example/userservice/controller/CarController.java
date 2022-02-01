@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Slf4j
 @AllArgsConstructor
@@ -41,6 +42,12 @@ public class CarController {
     public ResponseEntity<String> deleteCar(Principal principal, @RequestParam String regNumber) {
         carService.deleteCar(regNumber, Long.parseLong(principal.getName()));
         return ResponseEntity.ok("Car deleted");
+    }
+
+    @GetMapping("/car/list")
+    public ResponseEntity<List<Car>> getAllCars(Principal principal) {
+        List<Car> cars = carService.getAllCars(Long.parseLong(principal.getName()));
+        return ResponseEntity.ok(cars);
     }
 
 }

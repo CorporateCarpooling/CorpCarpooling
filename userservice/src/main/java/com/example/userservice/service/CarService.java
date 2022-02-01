@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -39,7 +40,6 @@ public class CarService {
         }
     }
 
-
     public void updateCar(Car car, Long userId) {
 
         Optional<Car> carToUpdate = carDataApi.getCarByRegistrationNumber(car.getRegistrationNumber(), userId);
@@ -64,7 +64,6 @@ public class CarService {
         }
     }
 
-
     public void deleteCar(String regNumber, Long userId) {
         Optional<Car> carInDatabase = carDataApi.getCarByRegistrationNumber(regNumber, userId);
 
@@ -73,4 +72,15 @@ public class CarService {
         }
         carDataApi.deleteCar(regNumber, userId);
     }
+
+    public List<Car> getAllCars(Long userId) {
+        Optional<List<Car>> carsInDatabase = carDataApi.getAllCars(userId);
+
+        if (carsInDatabase.isPresent()) {
+            return carsInDatabase.get();
+        } else {
+            throw new RuntimeException("No list of Cars found");
+        }
+    }
+
 }

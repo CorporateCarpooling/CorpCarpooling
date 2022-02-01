@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -55,6 +57,7 @@ public class CarDataApi {
                 .bodyToMono(Car.class);
         return Optional.ofNullable(carToUpdate.block());
     }
+
     public void deleteCar(String regNumber, Long userId) {
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
@@ -67,6 +70,26 @@ public class CarDataApi {
                 .retrieve()
                 .bodyToMono(String.class);
         String response = postResponse.block();
+    }
+
+    public Optional<List<Car>> getAllCars(Long userId) {
+
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+
+        Mono<Car[]> carInDatabase = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/car/list")
+                        .queryParam("userId", userId)
+                        .build())
+                .retrieve()
+                .bodyToMono(Car[].class);
+        Car[] cars = carInDatabase.block();
+
+        List<Car> carList = new ArrayList<>();
+        if (cars != null) {
+            carList.addAll(List.of(cars));
+        }
+        return Optional.of(carList);
     }
 
 }
