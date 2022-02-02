@@ -7,7 +7,8 @@ import lombok.Data;
 public class Passenger {
 
     private Long id;
-    private User user;
+    private Long userId;
+    private Long carpoolId;
     private Boolean approved;
 
 }

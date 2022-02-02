@@ -3,6 +3,8 @@ package com.example.mariadbservice.entity;
 import com.example.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -23,7 +25,7 @@ public class CarpoolEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private RouteEntity route;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "carpool", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PassengerEntity>passengers;
 
     private LocalDateTime departureTime;

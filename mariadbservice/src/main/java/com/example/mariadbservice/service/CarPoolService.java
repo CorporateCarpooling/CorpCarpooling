@@ -2,8 +2,11 @@ package com.example.mariadbservice.service;
 
 import com.example.mariadbservice.entity.*;
 import com.example.mariadbservice.mappers.CarPoolMapper;
+import com.example.mariadbservice.mappers.PassengerMapper;
 import com.example.mariadbservice.repository.*;
 import com.example.model.Carpool;
+import com.example.model.Passenger;
+import com.example.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,8 @@ public class CarPoolService {
     private final LocationRepository locationRepository;
     private final RouteRepository routeRepository;
     private final UserRepository userRepository;
+    private final PassengerRepository passengerRepository;
+    private final PassengerMapper passengerMapper;
 
     public Long create(Carpool carpool, Long driverUserId) {
         Optional<UserEntity> user = userRepository.findById(driverUserId);
@@ -80,4 +85,23 @@ public class CarPoolService {
         return carpools;
 
     }
+
+    public Carpool getCarpoolById(Long carpoolId) {
+        Optional<CarpoolEntity> carpoolEntity= carPoolRepository.findById(carpoolId);
+        if(!carpoolEntity.isPresent()){
+            throw new RuntimeException("There is no carpool");
+        }
+        Carpool carpool = carPoolMapper.dtoToCarpool(carpoolEntity.get());
+        return carpool;
+    }
+
+    public Passenger getPassengerById(Long passengerId) {
+        Optional<PassengerEntity> passengerEntity = passengerRepository.findById(passengerId);
+        if(!passengerEntity.isPresent()){
+            throw new RuntimeException("There is no passenger");
+        }
+        Passenger passenger = passengerMapper.dtoToPassenger(passengerEntity.get());
+        return passenger;
+    }
+
 }

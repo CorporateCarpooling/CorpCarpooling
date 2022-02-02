@@ -3,6 +3,7 @@ package com.example.mariadbservice.controller;
 import com.example.mariadbservice.mappers.CarPoolMapper;
 import com.example.mariadbservice.service.CarPoolService;
 import com.example.model.Carpool;
+import com.example.model.Passenger;
 import com.example.request.CarPoolRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,17 @@ public class CarPoolController {
         LocalDateTime latestDepartureTimeLocalDateTime = latestDepartureTime == null ? LocalDateTime.now().plusWeeks(1) : LocalDateTime.parse(latestDepartureTime);
         List<Carpool> carpool= carPoolService.getCarPoolByDate(earliestDepartureTimeLocalDateTime, latestDepartureTimeLocalDateTime);
         return ResponseEntity.ok(carpool);
+    }
+    @GetMapping("carpool/getcarpool")
+    public ResponseEntity<Carpool>getCarPoolbyId(@RequestParam (required = false)Long carpoolId){
+        Carpool carpool = carPoolService.getCarpoolById(carpoolId);
+        return ResponseEntity.ok(carpool);
+
+    }
+    @GetMapping("passenger/getpassenger")
+    public ResponseEntity<Passenger>getPassengerbyId(@RequestParam (required = false)Long passengerId) {
+        Passenger passenger = carPoolService.getPassengerById(passengerId);
+        return ResponseEntity.ok(passenger);
     }
 
 }
