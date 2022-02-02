@@ -90,7 +90,7 @@ public class CarService {
                 findFirst();
 
         if (!carToRemove.isPresent()) {
-            throw new RuntimeException("Car doesn't exist. Please register a car");
+            throw new RuntimeException("Car doesn't exist");
         }
 
         /**

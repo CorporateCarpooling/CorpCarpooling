@@ -104,4 +104,12 @@ public class CarPoolService {
         return passenger;
     }
 
+    public void deleteCarpoolById(Long id) {
+        Optional<CarpoolEntity> carpoolEntity = carPoolRepository.findById(id);
+
+        if(!carpoolEntity.isPresent()){
+            throw new RuntimeException("Carpool doesn't exist");
+        }
+        carPoolRepository.delete(carpoolEntity.get());
+    }
 }

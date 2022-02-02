@@ -37,4 +37,8 @@ public class CarPoolService {
         List<Carpool> carpoolsInDataBase= carpPoolApi.getCarPoolByDate(earliestDepartureTimeLocalDateTime, latestDepartureTimeLocalDateTime);
         return carpoolsInDataBase;
     }
+
+    public void deleteCarpool(long id) {
+        carpPoolApi.deleteCarpoolById(id);
+    }
 }
