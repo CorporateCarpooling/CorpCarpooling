@@ -104,8 +104,8 @@ public class CarPoolService {
         return passenger;
     }
 
-    public void deleteCarpoolById(Long id) {
-        Optional<CarpoolEntity> carpoolEntity = carPoolRepository.findById(id);
+    public void deleteCarpoolById(Long carpoolId) {
+        Optional<CarpoolEntity> carpoolEntity = carPoolRepository.findById(carpoolId);
 
         if(!carpoolEntity.isPresent()){
             throw new RuntimeException("Carpool doesn't exist");

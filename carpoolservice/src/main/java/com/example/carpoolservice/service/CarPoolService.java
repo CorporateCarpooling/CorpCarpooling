@@ -5,6 +5,7 @@ import com.example.carpoolservice.clientapi.CarpPoolApi;
 import com.example.carpoolservice.mappers.CarPoolMapper;
 import com.example.model.Car;
 import com.example.model.Carpool;
+import com.example.model.Passenger;
 import com.example.request.CarPoolRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,11 +35,34 @@ public class CarPoolService {
     }
 
     public List<Carpool> getCarPools(String earliestDepartureTimeLocalDateTime, String latestDepartureTimeLocalDateTime) {
-        List<Carpool> carpoolsInDataBase= carpPoolApi.getCarPoolByDate(earliestDepartureTimeLocalDateTime, latestDepartureTimeLocalDateTime);
+        List<Carpool> carpoolsInDataBase = carpPoolApi.getCarPoolByDate(earliestDepartureTimeLocalDateTime, latestDepartureTimeLocalDateTime);
         return carpoolsInDataBase;
     }
 
-    public void deleteCarpool(long id) {
-        carpPoolApi.deleteCarpoolById(id);
+    private Carpool getCarpoolById(Long carpoolId) {
+        Optional<Carpool> carpoolIndataBase = carpPoolApi.getCarPoolById(carpoolId);
+        if (carpoolIndataBase.isEmpty()) {
+            throw new RuntimeException("There is no carpool");
+        }
+        return carpoolIndataBase.get();
+    }
+
+    public void deleteCarpool(Long carpoolId, Long driverId) {
+
+        Carpool carpool = getCarpoolById(carpoolId);
+        if (carpool.getDriverId().longValue() != driverId.longValue()) {
+            throw new RuntimeException("Not your carpool");
+        }
+
+        boolean anyApprovedPassenger = isAnyPassengerApproved(carpool);
+        if (anyApprovedPassenger) {
+            throw new RuntimeException("you can't remove carpool. please contact passengers");
+        }
+
+        carpPoolApi.deleteCarpoolById(carpoolId);
+    }
+
+    private boolean isAnyPassengerApproved(Carpool carpool) {
+        return carpool.getPassengers().stream().anyMatch(Passenger::getApproved);
     }
 }

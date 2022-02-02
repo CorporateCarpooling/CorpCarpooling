@@ -32,8 +32,8 @@ public class CarPoolController {
         return ResponseEntity.ok(carpools);
     }
     @DeleteMapping("carpool/delete")
-    public ResponseEntity<String> deleteCarpool(@RequestParam long id){
-        carPoolService.deleteCarpool(id);
+    public ResponseEntity<String> deleteCarpool(Principal principal,@RequestParam Long carpoolId){
+        carPoolService.deleteCarpool(carpoolId, Long.parseLong(principal.getName()));
         return ResponseEntity.ok("Carpool deleted");
 
     }
