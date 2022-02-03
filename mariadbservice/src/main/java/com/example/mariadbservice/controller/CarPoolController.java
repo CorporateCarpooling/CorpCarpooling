@@ -47,5 +47,10 @@ public class CarPoolController {
         Passenger passenger = carPoolService.getPassengerById(passengerId);
         return ResponseEntity.ok(passenger);
     }
+    @DeleteMapping("carpool/delete")
+    public ResponseEntity<String> deleteCarpool(@RequestParam Long carpoolId){
+        carPoolService.deleteCarpoolById(carpoolId);
+        return ResponseEntity.ok("carpool deleted");
+    }
 
 }

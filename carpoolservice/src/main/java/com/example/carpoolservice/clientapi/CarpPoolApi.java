@@ -60,4 +60,27 @@ public class CarpPoolApi {
         return carpoolsInDataBase.collectList().block();
     }
 
+    public void deleteCarpoolById(Long carpoolId) {
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+        Mono<String> postResponse = webClient.delete()
+                .uri(uriBuilder -> uriBuilder
+                        .path("carpool/delete")
+                        .queryParam("carpoolId", carpoolId)
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class); //har string som param. och retunerar string
+        String response = postResponse.block(); //väntar på response
+    }
+    public Optional<Carpool> getCarPoolById(Long carpoolId) {
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+
+        Mono<Carpool> carpoolInDatabase = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("carpool/getcarpool")
+                        .queryParam("carpoolId", carpoolId)
+                        .build())
+                .retrieve()
+                .bodyToMono(Carpool.class);
+        return Optional.ofNullable(carpoolInDatabase.block());
+    }
 }

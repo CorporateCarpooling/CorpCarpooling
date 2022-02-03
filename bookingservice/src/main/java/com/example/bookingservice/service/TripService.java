@@ -44,7 +44,7 @@ public class TripService {
         }
 
         Carpool carpool = getCarpoolById(passengerOptional.get().getCarpoolId());
-        if(carpool.getDriverId() != driverId) {
+        if(carpool.getDriverId().longValue() != driverId.longValue()) {
             throw new RuntimeException("Not your Passenger");
         }
 

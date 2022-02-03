@@ -31,5 +31,11 @@ public class CarPoolController {
         List<Carpool> carpools = carPoolService.getCarPools(earliestDepartureTime, latestDepartureTime);
         return ResponseEntity.ok(carpools);
     }
+    @DeleteMapping("carpool/delete")
+    public ResponseEntity<String> deleteCarpool(Principal principal,@RequestParam Long carpoolId){
+        carPoolService.deleteCarpool(carpoolId, Long.parseLong(principal.getName()));
+        return ResponseEntity.ok("Carpool deleted");
+
+    }
 
 }
