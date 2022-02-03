@@ -2,11 +2,8 @@ package com.example.mariadbservice.service;
 
 import com.example.mariadbservice.entity.*;
 import com.example.mariadbservice.mappers.CarPoolMapper;
-import com.example.mariadbservice.mappers.PassengerMapper;
 import com.example.mariadbservice.repository.*;
 import com.example.model.Carpool;
-import com.example.model.Passenger;
-import com.example.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
