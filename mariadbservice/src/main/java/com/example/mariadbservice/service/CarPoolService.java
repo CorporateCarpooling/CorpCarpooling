@@ -2,8 +2,10 @@ package com.example.mariadbservice.service;
 
 import com.example.mariadbservice.entity.*;
 import com.example.mariadbservice.mappers.CarPoolMapper;
+import com.example.mariadbservice.mappers.PassengerMapper;
 import com.example.mariadbservice.repository.*;
 import com.example.model.Carpool;
+import com.example.model.Passenger;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -76,7 +78,6 @@ public class CarPoolService {
     }
 
     public List<Carpool> getCarPoolByDate(LocalDateTime departureTime, LocalDateTime latestDepartureTime) {
-        // UserEntity userEntity = userRepository.getById(userId);
         List<CarpoolEntity> carpoolEntities = carPoolRepository.findAllByDepartureTimeGreaterThanAndDepartureTimeLessThan(departureTime, latestDepartureTime);
         List<Carpool> carpools = carpoolEntities.stream().map(carPoolMapper::dtoToCarpool).collect(Collectors.toList());
         return carpools;
