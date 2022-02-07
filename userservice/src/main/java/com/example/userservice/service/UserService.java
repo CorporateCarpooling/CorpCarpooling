@@ -41,8 +41,8 @@ public class UserService {
         dataApi.updateUser(user);
     }
 
-    public User getUser(String email) {
-        Optional<User> userInDatabase = dataApi.getUserByEmail(email);
+    public User getUser(String userId) {
+        Optional<User> userInDatabase = dataApi.getUserById(userId);
 
         if (userInDatabase.isPresent()) {
             return userInDatabase.get();

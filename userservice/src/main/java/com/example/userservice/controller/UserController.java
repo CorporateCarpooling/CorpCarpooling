@@ -76,8 +76,8 @@ public class UserController {
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/user")
-    public ResponseEntity<User> getUser(String email) {
-        User user = userService.getUser(email);
+    public ResponseEntity<User> getUser(Principal principal) {
+        User user = userService.getUser(principal.getName());
         return ResponseEntity.ok(user);
     }
 
