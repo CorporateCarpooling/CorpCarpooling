@@ -34,12 +34,21 @@ public class UserService {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             dataApi.postUser(user);
         }
-
     }
 
     public void updateCustomer(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         dataApi.updateUser(user);
+    }
+
+    public User getUser(String email) {
+        Optional<User> userInDatabase = dataApi.getUserByEmail(email);
+
+        if (userInDatabase.isPresent()) {
+            return userInDatabase.get();
+        } else {
+            throw new RuntimeException("User does not exist");
+        }
     }
 
     public void deleteCustomer(String id) {
