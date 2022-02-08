@@ -17,14 +17,13 @@ import java.util.Set;
 
 @AllArgsConstructor
 @Service
-public class DataApi /*implements UserDetailsService*/ {
+public class DataApi {
 
     private Environment environment;
 
     public Optional<User> getUserById(String userId) {
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
-        //Kolla om användaren redan finns.
         Mono<User> userInDatabase = webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/user")
@@ -36,11 +35,9 @@ public class DataApi /*implements UserDetailsService*/ {
     }
 
     public Optional<User> getUserByEmail(String email) {
-        // https://dzone.com/articles/resttemplate-vs-webclient
-        // Tror man bör försöka använda webClient för att prata med mariadbService container.
+
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
-        //Kolla om användaren redan finns.
         Mono<User> userInDatabase = webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/user")
@@ -73,8 +70,6 @@ public class DataApi /*implements UserDetailsService*/ {
                 .bodyValue(user)
                 .retrieve()
                 .bodyToMono(String.class);
-        //Gör roliga saker. 1m
-
         String response = postResponse.block();
 
     }
@@ -86,7 +81,7 @@ public class DataApi /*implements UserDetailsService*/ {
                         .queryParam("id", id)
                         .build())
                 .retrieve()
-                .bodyToMono(String.class); //har string som param. och retunerar string
-        String response = postResponse.block(); //väntar på response
+                .bodyToMono(String.class);
+        String response = postResponse.block();
     }
 }
