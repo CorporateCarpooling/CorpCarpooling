@@ -8,6 +8,7 @@ import com.example.userservice.model.AuthToken;
 import com.example.userservice.model.LoginUser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -71,6 +72,13 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = tokenProvider.generateToken(authentication);
         return ResponseEntity.ok(new AuthToken(token));
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/user")
+    public ResponseEntity<User> getUser(Principal principal) {
+        User user = userService.getUser(principal.getName());
+        return ResponseEntity.ok(user);
     }
 
     @PreAuthorize("hasRole('USER')")

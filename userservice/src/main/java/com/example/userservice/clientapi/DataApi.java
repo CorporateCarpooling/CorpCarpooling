@@ -21,6 +21,20 @@ public class DataApi /*implements UserDetailsService*/ {
 
     private Environment environment;
 
+    public Optional<User> getUserById(String userId) {
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+
+        //Kolla om användaren redan finns.
+        Mono<User> userInDatabase = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/user")
+                        .queryParam("id", userId)
+                        .build())
+                .retrieve()
+                .bodyToMono(User.class);
+        return Optional.ofNullable(userInDatabase.block());
+    }
+
     public Optional<User> getUserByEmail(String email) {
         // https://dzone.com/articles/resttemplate-vs-webclient
         // Tror man bör försöka använda webClient för att prata med mariadbService container.
