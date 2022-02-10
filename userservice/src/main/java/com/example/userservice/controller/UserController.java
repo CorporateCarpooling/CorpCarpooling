@@ -54,8 +54,6 @@ public class UserController {
     @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/user/delete")
     public ResponseEntity<String> DeleteUser(Principal principal, @RequestParam String id) {
-        // User user = userMapper.toUser(registerUserRequest);
-        // user.setId(Long.parseLong(principal.getName()));
         userService.deleteCustomer(id);
         return ResponseEntity.ok("User deleted.");
     }
