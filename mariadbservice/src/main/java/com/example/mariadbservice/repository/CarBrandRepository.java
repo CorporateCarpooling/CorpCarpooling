@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CarBrandRepository extends JpaRepository<CarBrandEntity, Long> {
-    CarBrandEntity findByBrandName(String brandName);
-
+  CarBrandEntity findByBrandName(String brandName);
 }

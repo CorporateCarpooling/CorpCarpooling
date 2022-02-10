@@ -16,26 +16,25 @@ import java.util.List;
 @RestController
 public class CarPoolController {
 
-    private CarPoolService carPoolService;
-    private CarPoolMapper carPoolMapper;
+  private CarPoolService carPoolService;
+  private CarPoolMapper carPoolMapper;
 
-    @PostMapping("/route/register")
-    public ResponseEntity<String> registerRoute(Principal principal, @RequestBody RegisterRouteRequest registerRouteRequest) {
-        Carpool carpool = carPoolMapper.dtoToCarPool(registerRouteRequest);
-        carPoolService.registerRoute(carpool, registerRouteRequest.getRegistrationNumber(), Long.parseLong(principal.getName()));
-        return ResponseEntity.ok("Route registered");
-    }
+  @PostMapping("/route/register")
+  public ResponseEntity<String> registerRoute(Principal principal, @RequestBody RegisterRouteRequest registerRouteRequest) {
+    Carpool carpool = carPoolMapper.dtoToCarPool(registerRouteRequest);
+    carPoolService.registerRoute(carpool, registerRouteRequest.getRegistrationNumber(), Long.parseLong(principal.getName()));
+    return ResponseEntity.ok("Route registered");
+  }
 
-    @GetMapping("/carpools")
-    public ResponseEntity<List<Carpool>> getAllCarPools(@RequestParam(required = false) String earliestDepartureTime, @RequestParam(required = false) String latestDepartureTime) {
-        List<Carpool> carpools = carPoolService.getCarPools(earliestDepartureTime, latestDepartureTime);
-        return ResponseEntity.ok(carpools);
-    }
-    @DeleteMapping("carpool/delete")
-    public ResponseEntity<String> deleteCarpool(Principal principal,@RequestParam Long carpoolId){
-        carPoolService.deleteCarpool(carpoolId, Long.parseLong(principal.getName()));
-        return ResponseEntity.ok("Carpool deleted");
+  @GetMapping("/carpools")
+  public ResponseEntity<List<Carpool>> getAllCarPools(@RequestParam(required = false) String earliestDepartureTime, @RequestParam(required = false) String latestDepartureTime) {
+    List<Carpool> carpools = carPoolService.getCarPools(earliestDepartureTime, latestDepartureTime);
+    return ResponseEntity.ok(carpools);
+  }
 
-    }
-
+  @DeleteMapping("carpool/delete")
+  public ResponseEntity<String> deleteCarpool(Principal principal, @RequestParam Long carpoolId) {
+    carPoolService.deleteCarpool(carpoolId, Long.parseLong(principal.getName()));
+    return ResponseEntity.ok("Carpool deleted");
+  }
 }

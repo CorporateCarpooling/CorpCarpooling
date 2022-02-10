@@ -8,9 +8,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CityMapper {
 
-    @Mapping(target = "id", source = "city.id")
-    @Mapping(target = "cityName", source = "city.cityName")
-    CityEntity cityToCityDto(City city);
+  @Mapping(target = "id", source = "city.id")
+  @Mapping(target = "cityName", source = "city.cityName")
+  CityEntity cityToCityDto(City city);
 
-    City dtoToCity(CityEntity cityEntity);
+  City dtoToCity(CityEntity cityEntity);
 }

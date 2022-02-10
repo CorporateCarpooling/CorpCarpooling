@@ -15,39 +15,38 @@ import java.util.List;
 @AllArgsConstructor
 public class CarController {
 
-    private CarService carService;
-    private CarMapper carMapper;
+  private CarService carService;
+  private CarMapper carMapper;
 
-    @PostMapping("car/register")
-    public ResponseEntity<String> addCar(@RequestBody CarRequest carRequest) {
-        Car car = carMapper.dtoToCar(carRequest);
-        carService.createCar(car, carRequest.getUserId());
-        return ResponseEntity.ok("Car registred");
-    }
+  @PostMapping("car/register")
+  public ResponseEntity<String> addCar(@RequestBody CarRequest carRequest) {
+    Car car = carMapper.dtoToCar(carRequest);
+    carService.createCar(car, carRequest.getUserId());
+    return ResponseEntity.ok("Car registred");
+  }
 
-    @GetMapping("car")
-    public ResponseEntity<Car> getCar(@RequestParam String registrationNumber, @RequestParam Long userId) {
-        Car car = carService.getCarByRegistrationNumber(registrationNumber, userId);
-        return ResponseEntity.ok(car);
-    }
+  @GetMapping("car")
+  public ResponseEntity<Car> getCar(@RequestParam String registrationNumber, @RequestParam Long userId) {
+    Car car = carService.getCarByRegistrationNumber(registrationNumber, userId);
+    return ResponseEntity.ok(car);
+  }
 
-    @GetMapping("car/list")
-    public ResponseEntity<List<Car>> getAllCars(@RequestParam Long userId) {
-        List<Car> cars = carService.getAllCars(userId);
-        return ResponseEntity.ok(cars);
-    }
+  @GetMapping("car/list")
+  public ResponseEntity<List<Car>> getAllCars(@RequestParam Long userId) {
+    List<Car> cars = carService.getAllCars(userId);
+    return ResponseEntity.ok(cars);
+  }
 
-    @PatchMapping("car/update")
-    public ResponseEntity<Car> updateCar(@RequestBody CarRequest carRequest) {
-        Car car = carMapper.dtoToCar(carRequest);
-        carService.updateCar(car, carRequest.getUserId());
-        return ResponseEntity.ok(car);
-    }
+  @PatchMapping("car/update")
+  public ResponseEntity<Car> updateCar(@RequestBody CarRequest carRequest) {
+    Car car = carMapper.dtoToCar(carRequest);
+    carService.updateCar(car, carRequest.getUserId());
+    return ResponseEntity.ok(car);
+  }
 
-    @DeleteMapping("car/delete")
-    public ResponseEntity<String> deleteCar(@RequestParam String regNumber, @RequestParam Long userId) {
-        carService.deleteCarByRegistrationNumber(regNumber, userId);
-        return ResponseEntity.ok("Car deleted");
-    }
-
+  @DeleteMapping("car/delete")
+  public ResponseEntity<String> deleteCar(@RequestParam String regNumber, @RequestParam Long userId) {
+    carService.deleteCarByRegistrationNumber(regNumber, userId);
+    return ResponseEntity.ok("Car deleted");
+  }
 }

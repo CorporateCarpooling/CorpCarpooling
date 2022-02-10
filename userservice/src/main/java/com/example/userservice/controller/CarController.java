@@ -16,38 +16,38 @@ import java.util.List;
 @RestController
 public class CarController {
 
-    private final CarService carService;
-    private final CarMapper carMapper;
+  private final CarService carService;
+  private final CarMapper carMapper;
 
-    @PostMapping("/car/register")
-    public ResponseEntity<String> registerCar(Principal principal, @RequestBody RegisterCarRequest registerCarRequest) {
-        Car car = carMapper.dtoToCar(registerCarRequest);
-        carService.registerCar(car, Long.parseLong(principal.getName()));
-        return ResponseEntity.ok("Car registered");
-    }
+  @PostMapping("/car/register")
+  public ResponseEntity<String> registerCar(Principal principal, @RequestBody RegisterCarRequest registerCarRequest) {
+    Car car = carMapper.dtoToCar(registerCarRequest);
+    carService.registerCar(car, Long.parseLong(principal.getName()));
+    return ResponseEntity.ok("Car registered");
+  }
 
-    @PatchMapping("/car/update")
-    public ResponseEntity<String> updateCar(Principal principal, @RequestBody RegisterCarRequest registerCarRequest) {
-        Car car = carMapper.dtoToCar(registerCarRequest);
-        carService.updateCar(car, Long.parseLong(principal.getName()));
-        return ResponseEntity.ok("Car updated");
-    }
+  @PatchMapping("/car/update")
+  public ResponseEntity<String> updateCar(Principal principal, @RequestBody RegisterCarRequest registerCarRequest) {
+    Car car = carMapper.dtoToCar(registerCarRequest);
+    carService.updateCar(car, Long.parseLong(principal.getName()));
+    return ResponseEntity.ok("Car updated");
+  }
 
-    @GetMapping("/car/getbyregnumber")
-    public ResponseEntity<Car> getCar(Principal principal, @RequestParam String regNumber) {
-        Car car = carService.getCar(regNumber, Long.parseLong(principal.getName()));
-        return ResponseEntity.ok(car);
-    }
-    @DeleteMapping("/car/delete")
-    public ResponseEntity<String> deleteCar(Principal principal, @RequestParam String regNumber) {
-        carService.deleteCar(regNumber, Long.parseLong(principal.getName()));
-        return ResponseEntity.ok("Car deleted");
-    }
+  @GetMapping("/car/getbyregnumber")
+  public ResponseEntity<Car> getCar(Principal principal, @RequestParam String regNumber) {
+    Car car = carService.getCar(regNumber, Long.parseLong(principal.getName()));
+    return ResponseEntity.ok(car);
+  }
 
-    @GetMapping("/car/list")
-    public ResponseEntity<List<Car>> getAllCars(Principal principal) {
-        List<Car> cars = carService.getAllCars(Long.parseLong(principal.getName()));
-        return ResponseEntity.ok(cars);
-    }
+  @DeleteMapping("/car/delete")
+  public ResponseEntity<String> deleteCar(Principal principal, @RequestParam String regNumber) {
+    carService.deleteCar(regNumber, Long.parseLong(principal.getName()));
+    return ResponseEntity.ok("Car deleted");
+  }
 
+  @GetMapping("/car/list")
+  public ResponseEntity<List<Car>> getAllCars(Principal principal) {
+    List<Car> cars = carService.getAllCars(Long.parseLong(principal.getName()));
+    return ResponseEntity.ok(cars);
+  }
 }

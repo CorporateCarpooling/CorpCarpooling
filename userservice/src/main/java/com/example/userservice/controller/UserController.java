@@ -26,63 +26,63 @@ import java.security.Principal;
 @AllArgsConstructor
 public class UserController {
 
-    private UserService userService;
-    private final UserMapper userMapper;
+  private UserService userService;
+  private final UserMapper userMapper;
 
-    private TokenProvider tokenProvider;
+  private TokenProvider tokenProvider;
 
-    private AuthenticationManager authenticationManager;
+  private AuthenticationManager authenticationManager;
 
-    @PostMapping("/user/register")
-    public ResponseEntity<Response> registerUser(@Valid @RequestBody RegisterUserRequest registerUserRequest) {
-        log.info("user registration{}", registerUserRequest);
-        User user = userMapper.toUser(registerUserRequest);
-        userService.registerCustomer(user);
-        return ResponseEntity.ok(new Response("User registered successfully"));
-    }
+  @PostMapping("/user/register")
+  public ResponseEntity<Response> registerUser(@Valid @RequestBody RegisterUserRequest registerUserRequest) {
+    log.info("user registration{}", registerUserRequest);
+    User user = userMapper.toUser(registerUserRequest);
+    userService.registerCustomer(user);
+    return ResponseEntity.ok(new Response("User registered successfully"));
+  }
 
-    @PreAuthorize("hasRole('USER')")
-    @PostMapping("/user/update")
-    public ResponseEntity<String> updateUser(Principal principal, @Valid @RequestBody UpdateUserRequest updateUserRequest) {
-        User user = userMapper.toUser(updateUserRequest);
-        user.setId(Long.parseLong(principal.getName()));
-        userService.updateCustomer(user);
-        return ResponseEntity.ok("User Updated.");
-    }
+  @PreAuthorize("hasRole('USER')")
+  @PostMapping("/user/update")
+  public ResponseEntity<String> updateUser(Principal principal, @Valid @RequestBody UpdateUserRequest updateUserRequest) {
+    User user = userMapper.toUser(updateUserRequest);
+    user.setId(Long.parseLong(principal.getName()));
+    userService.updateCustomer(user);
+    return ResponseEntity.ok("User Updated.");
+  }
 
-    // @PreAuthorize("hasRole('ADMIN')")
-    @PreAuthorize("hasRole('USER')")
-    @DeleteMapping("/user/delete")
-    public ResponseEntity<String> DeleteUser(Principal principal, @RequestParam String id) {
-        userService.deleteCustomer(id);
-        return ResponseEntity.ok("User deleted.");
-    }
+  // @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasRole('USER')")
+  @DeleteMapping("/user/delete")
+  public ResponseEntity<String> DeleteUser(Principal principal, @RequestParam String id) {
+    userService.deleteCustomer(id);
+    return ResponseEntity.ok("User deleted.");
+  }
 
-    @PostMapping("/user/login")
-    public ResponseEntity<AuthToken> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
+  @PostMapping("/user/login")
+  public ResponseEntity<AuthToken> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginUser.getEmail(),
-                        loginUser.getPassword()
-                )
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final String token = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new AuthToken(token));
-    }
+    final Authentication authentication = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(
+            loginUser.getEmail(),
+            loginUser.getPassword()
+        )
+    );
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+    final String token = tokenProvider.generateToken(authentication);
+    return ResponseEntity.ok(new AuthToken(token));
+  }
 
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/user")
-    public ResponseEntity<User> getUser(Principal principal) {
-        User user = userService.getUser(principal.getName());
-        return ResponseEntity.ok(user);
-    }
+  @PreAuthorize("hasRole('USER')")
+  @GetMapping("/user")
+  public ResponseEntity<User> getUser(Principal principal) {
+    User user = userService.getUser(principal.getName());
+    return ResponseEntity.ok(user);
+  }
 
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/user/ping")
-    public ResponseEntity<String> ping() {
-        return ResponseEntity.ok("pong");
-    }
+  @PreAuthorize("hasRole('USER')")
+  @GetMapping("/user/ping")
+  public ResponseEntity<String> ping() {
+    return ResponseEntity.ok("pong");
+  }
 
 }

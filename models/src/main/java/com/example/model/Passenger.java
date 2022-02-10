@@ -6,10 +6,10 @@ import lombok.Data;
 @Data
 public class Passenger {
 
-    private Long id;
-    private Long userId;
-    private Long carpoolId;
-    private Boolean approved;
+  private Long id;
+  private Long userId;
+  private Long carpoolId;
+  private Boolean approved;
 
 }
 

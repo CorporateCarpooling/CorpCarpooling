@@ -16,42 +16,38 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserService {
 
-//    private Environment environment;
-    private DataApi dataApi;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+  private DataApi dataApi;
+  private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-   // private webClient.Builder webClientBuilder;
+  public void registerCustomer(User user) {
 
-    public void registerCustomer(User user) {
+    Optional<User> userInDatabase = dataApi.getUserByEmail(user.getEmail());
 
-        Optional<User> userInDatabase = dataApi.getUserByEmail(user.getEmail());
-
-        if(userInDatabase.isPresent()) {
-            throw new RuntimeException("User already Exist");
-        } else {
-            user.setRoles(List.of(Role.USER));
-//            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            dataApi.postUser(user);
-        }
+    if (userInDatabase.isPresent()) {
+      throw new RuntimeException("User already Exist");
+    } else {
+      user.setRoles(List.of(Role.USER));
+      user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+      dataApi.postUser(user);
     }
+  }
 
-    public void updateCustomer(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        dataApi.updateUser(user);
+  public void updateCustomer(User user) {
+    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    dataApi.updateUser(user);
+  }
+
+  public User getUser(String userId) {
+    Optional<User> userInDatabase = dataApi.getUserById(userId);
+
+    if (userInDatabase.isPresent()) {
+      return userInDatabase.get();
+    } else {
+      throw new RuntimeException("User does not exist");
     }
+  }
 
-    public User getUser(String userId) {
-        Optional<User> userInDatabase = dataApi.getUserById(userId);
-
-        if (userInDatabase.isPresent()) {
-            return userInDatabase.get();
-        } else {
-            throw new RuntimeException("User does not exist");
-        }
-    }
-
-    public void deleteCustomer(String id) {
-        dataApi.deleteUser(id);
-    }
+  public void deleteCustomer(String id) {
+    dataApi.deleteUser(id);
+  }
 }

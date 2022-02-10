@@ -6,14 +6,13 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.6.1</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <groupId>com.example</groupId>
     <artifactId>CorpCarpooling</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>CorpCarpooling</name>
-    <!--<description>CorpCarpooling</description>-->
     <packaging>pom</packaging>
 
     <modules>
@@ -27,35 +26,18 @@
 
     <properties>
         <java.version>11</java.version>
-<!--        <spring.boot.maven.plugin.version>2.6.1</spring.boot.maven.plugin.version>-->
-<!--        <spring.boot.dependencies.version>2.6.1</spring.boot.dependencies.version>-->
-<!--        <lombok.version>1.18.20</lombok.version>-->
         <mapstruct.version>1.4.2.Final</mapstruct.version>
-<!--        <maven.compiler.plugin>3.8.1</maven.compiler.plugin>-->
     </properties>
+
     <dependencyManagement>
         <dependencies>
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-dependencies</artifactId>-->
-<!--                <version>${spring.boot.dependencies.version}</version>-->
-<!--                <scope>import</scope>-->
-<!--                <type>pom</type>-->
-<!--            </dependency>-->
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
 
-<!--            <dependency>-->
-<!--                <groupId>org.projectlombok</groupId>-->
-<!--                <artifactId>lombok</artifactId>-->
-<!--                <version>${lombok.version}</version>-->
-<!--                <optional>true</optional>-->
-<!--            </dependency>-->
         </dependencies>
-<!--        </dependencies>-->
 
     </dependencyManagement>
 
@@ -65,7 +47,6 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-<!--                    <version>${maven-compiler-plugin.version}</version>-->
                     <configuration>
                         <excludes>
                             <exclude>
@@ -79,7 +60,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-<!--                   <version>3.8.1</version>-->
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
@@ -87,7 +67,6 @@
                             <path>
                                 <groupId>org.projectlombok</groupId>
                                 <artifactId>lombok</artifactId>
-                                <!--<optional>true</optional>-->
                                 <version>${lombok.version}</version>
                             </path>
                             <path>

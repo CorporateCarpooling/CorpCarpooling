@@ -11,15 +11,15 @@ import javax.persistence.*;
 @Table(name = "passenger")
 public class PassengerEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
-    @OneToOne(fetch = FetchType.EAGER)
-    private UserEntity user;
-    @ManyToOne(fetch = FetchType.EAGER)//??
-    private CarpoolEntity carpool;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  private Long id;
+  @OneToOne(fetch = FetchType.EAGER)
+  private UserEntity user;
+  @ManyToOne(fetch = FetchType.EAGER)
+  private CarpoolEntity carpool;
 
-    private Boolean approved;
+  private Boolean approved;
 
 }
 

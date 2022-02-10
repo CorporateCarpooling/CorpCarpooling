@@ -15,17 +15,17 @@ import java.security.Principal;
 @AllArgsConstructor
 @RestController
 public class TripController {
-    private final TripService tripService;
+  private final TripService tripService;
 
-    @PostMapping("join/carpool")
-    public ResponseEntity<String> joinCarpool(Principal principal, @RequestBody JoinCarpoolRequest joinCarpoolRequest){
-        tripService.addPassengerToCarPool(Long.parseLong(principal.getName()),joinCarpoolRequest.getCarpoolId());
-        return ResponseEntity.ok("request send");
-    }
-    @PostMapping("approve/passenger")
-    public ResponseEntity<String> approveCarpool(Principal principal, @RequestBody PassengerApproveRequest passengerApproveRequest){
-        tripService.approvePassengerRequest(passengerApproveRequest.getPassengerId(), Long.parseLong(principal.getName()));
-        return ResponseEntity.ok("Passenger request approved");
-    }
+  @PostMapping("join/carpool")
+  public ResponseEntity<String> joinCarpool(Principal principal, @RequestBody JoinCarpoolRequest joinCarpoolRequest) {
+    tripService.addPassengerToCarPool(Long.parseLong(principal.getName()), joinCarpoolRequest.getCarpoolId());
+    return ResponseEntity.ok("request send");
+  }
 
+  @PostMapping("approve/passenger")
+  public ResponseEntity<String> approveCarpool(Principal principal, @RequestBody PassengerApproveRequest passengerApproveRequest) {
+    tripService.approvePassengerRequest(passengerApproveRequest.getPassengerId(), Long.parseLong(principal.getName()));
+    return ResponseEntity.ok("Passenger request approved");
+  }
 }

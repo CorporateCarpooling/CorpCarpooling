@@ -19,68 +19,67 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CarService {
 
-    private final CarDataApi carDataApi;
-    private final SecurityApi securityApi;
-    private final CarMapper carMapper;
+  private final CarDataApi carDataApi;
+  private final SecurityApi securityApi;
+  private final CarMapper carMapper;
 
-    public void registerCar(Car car, Long userId) {
-        Optional<User> userInDatabase = securityApi.getUserById(Long.toString(userId));
-        if (!userInDatabase.isPresent()) {
-            throw new RuntimeException("No user in database");
-        }
-        boolean noMatchingCar = userInDatabase.get().getCars() == null || userInDatabase.get().getCars().stream().
-                noneMatch(carInUser -> carInUser.getRegistrationNumber().equals(car.getRegistrationNumber()));
-
-        if (!noMatchingCar) {
-            throw new RuntimeException("Car already Exist");
-        } else {
-            CarRequest carRequest = carMapper.carToCarRequest(car);
-            carRequest.setUserId(userId);
-            carDataApi.postCar(carRequest);
-        }
+  public void registerCar(Car car, Long userId) {
+    Optional<User> userInDatabase = securityApi.getUserById(Long.toString(userId));
+    if (!userInDatabase.isPresent()) {
+      throw new RuntimeException("No user in database");
     }
+    boolean noMatchingCar = userInDatabase.get().getCars() == null || userInDatabase.get().getCars().stream().
+        noneMatch(carInUser -> carInUser.getRegistrationNumber().equals(car.getRegistrationNumber()));
 
-    public void updateCar(Car car, Long userId) {
-
-        Optional<Car> carToUpdate = carDataApi.getCarByRegistrationNumber(car.getRegistrationNumber(), userId);
-
-        if (carToUpdate.isPresent()) {
-            CarRequest carRequest = carMapper.carToCarRequest(car);
-            carRequest.setUserId(userId);
-            carDataApi.updateCar(carRequest);
-        } else {
-            throw new RuntimeException("Car doesn't exist. Please register a car");
-        }
+    if (!noMatchingCar) {
+      throw new RuntimeException("Car already Exist");
+    } else {
+      CarRequest carRequest = carMapper.carToCarRequest(car);
+      carRequest.setUserId(userId);
+      carDataApi.postCar(carRequest);
     }
+  }
 
-    public Car getCar(String regNumber, Long userId) {
+  public void updateCar(Car car, Long userId) {
 
-        Optional<Car> carInDatabase = carDataApi.getCarByRegistrationNumber(regNumber, userId);
+    Optional<Car> carToUpdate = carDataApi.getCarByRegistrationNumber(car.getRegistrationNumber(), userId);
 
-        if (carInDatabase.isPresent()) {
-            return carInDatabase.get();
-        } else {
-            throw new RuntimeException("Car doesn't exist. Please register a car");
-        }
+    if (carToUpdate.isPresent()) {
+      CarRequest carRequest = carMapper.carToCarRequest(car);
+      carRequest.setUserId(userId);
+      carDataApi.updateCar(carRequest);
+    } else {
+      throw new RuntimeException("Car doesn't exist. Please register a car");
     }
+  }
 
-    public void deleteCar(String regNumber, Long userId) {
-        Optional<Car> carInDatabase = carDataApi.getCarByRegistrationNumber(regNumber, userId);
+  public Car getCar(String regNumber, Long userId) {
 
-        if (!carInDatabase.isPresent()) {
-            throw new RuntimeException("Car doesn't exist. Please register a car");
-        }
-        carDataApi.deleteCar(regNumber, userId);
+    Optional<Car> carInDatabase = carDataApi.getCarByRegistrationNumber(regNumber, userId);
+
+    if (carInDatabase.isPresent()) {
+      return carInDatabase.get();
+    } else {
+      throw new RuntimeException("Car doesn't exist. Please register a car");
     }
+  }
 
-    public List<Car> getAllCars(Long userId) {
-        Optional<List<Car>> carsInDatabase = carDataApi.getAllCars(userId);
+  public void deleteCar(String regNumber, Long userId) {
+    Optional<Car> carInDatabase = carDataApi.getCarByRegistrationNumber(regNumber, userId);
 
-        if (carsInDatabase.isPresent()) {
-            return carsInDatabase.get();
-        } else {
-            throw new RuntimeException("No list of Cars found");
-        }
+    if (!carInDatabase.isPresent()) {
+      throw new RuntimeException("Car doesn't exist. Please register a car");
     }
+    carDataApi.deleteCar(regNumber, userId);
+  }
 
+  public List<Car> getAllCars(Long userId) {
+    Optional<List<Car>> carsInDatabase = carDataApi.getAllCars(userId);
+
+    if (carsInDatabase.isPresent()) {
+      return carsInDatabase.get();
+    } else {
+      throw new RuntimeException("No list of Cars found");
+    }
+  }
 }

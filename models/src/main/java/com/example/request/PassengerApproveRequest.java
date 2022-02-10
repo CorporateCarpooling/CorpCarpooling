@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class PassengerApproveRequest {
-    private Long passengerId;
+  private Long passengerId;
 }

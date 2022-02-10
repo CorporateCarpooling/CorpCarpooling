@@ -22,6 +22,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
+
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {CarMapperImpl.class, CarController.class})
@@ -40,20 +41,20 @@ class TestCarController {
   @Test
   void addCar() {
     //Given
-    CarRequest carRequest= new CarRequest();
+    CarRequest carRequest = new CarRequest();
     carRequest.setUserId(2L);
-    CarBrand carBrand= new CarBrand();
+    CarBrand carBrand = new CarBrand();
     carBrand.setBrandName(BRAND_NAME);
     carRequest.setCarBrand(carBrand);
     carRequest.setRegistrationNumber(REGISTRATIONNUMBER);
-    YearModel yearModel= new YearModel();
+    YearModel yearModel = new YearModel();
     yearModel.setYearModel(YEAR_MODEL);
     carRequest.setYearModel(yearModel);
     carRequest.setFuelType(BENSIN);
     carRequest.setAvailableSeats(5);
 
     //when
-    var response= underTest.addCar(carRequest);
+    var response = underTest.addCar(carRequest);
 
 
     //Then
@@ -64,16 +65,17 @@ class TestCarController {
     CarBrand carBrand1 = new CarBrand();
     carBrand1.setBrandName(BRAND_NAME);
     expectedCar.setCarBrand(carBrand1);
-    YearModel yearModel1= new YearModel();
+    YearModel yearModel1 = new YearModel();
     yearModel1.setYearModel(YEAR_MODEL);
     expectedCar.setYearModel(yearModel1);
 
 
-    Mockito.verify(carService, Mockito.times(1)).createCar(eq(expectedCar),eq(carRequest.getUserId()));
-    assertEquals(200,response.getStatusCodeValue());
+    Mockito.verify(carService, Mockito.times(1)).createCar(eq(expectedCar), eq(carRequest.getUserId()));
+    assertEquals(200, response.getStatusCodeValue());
 
 
   }
+
   @DisplayName("should return respons entity ok with the right value")
   @Test
   void getCar() {
@@ -88,7 +90,7 @@ class TestCarController {
     CarBrand carBrand1 = new CarBrand();
     carBrand1.setBrandName(BRAND_NAME);
     car.setCarBrand(carBrand1);
-    YearModel yearModel1= new YearModel();
+    YearModel yearModel1 = new YearModel();
     yearModel1.setYearModel(YEAR_MODEL);
     car.setYearModel(yearModel1);
 
@@ -99,17 +101,18 @@ class TestCarController {
     var response = underTest.getCar(REGISTRATIONNUMBER, userId);
 
     //Then
-    Mockito.verify(carService,Mockito.times(1)).getCarByRegistrationNumber(eq(REGISTRATIONNUMBER),eq(userId));
+    Mockito.verify(carService, Mockito.times(1)).getCarByRegistrationNumber(eq(REGISTRATIONNUMBER), eq(userId));
     assertEquals(200, response.getStatusCodeValue());
     assertEquals(REGISTRATIONNUMBER, response.getBody().getRegistrationNumber());
 
   }
+
   @DisplayName("should return respons entity ok with allCars in body")
   @Test
   void getAllCars() {
     //Given
     Long userId = 200L;
-    List<Car>cars= new ArrayList<>();
+    List<Car> cars = new ArrayList<>();
     Car expectedCar = new Car();
     expectedCar.setId(userId);
     expectedCar.setFuelType(BENSIN);
@@ -118,32 +121,33 @@ class TestCarController {
     CarBrand carBrand1 = new CarBrand();
     carBrand1.setBrandName(BRAND_NAME);
     expectedCar.setCarBrand(carBrand1);
-    YearModel yearModel1= new YearModel();
+    YearModel yearModel1 = new YearModel();
     yearModel1.setYearModel(YEAR_MODEL);
     expectedCar.setYearModel(yearModel1);
     cars.add(expectedCar);
     Mockito.when(carService.getAllCars(userId)).thenReturn(cars);
 
     //when
-    var response= underTest.getAllCars(userId);
+    var response = underTest.getAllCars(userId);
 
     //Then
-    assertEquals(ResponseEntity.ok(cars),response);
-    assertEquals(200,response.getStatusCodeValue());
+    assertEquals(ResponseEntity.ok(cars), response);
+    assertEquals(200, response.getStatusCodeValue());
 
   }
- @DisplayName("should update car with the right value")
+
+  @DisplayName("should update car with the right value")
   @Test
   void updateCar() {
     //Given
     Long userId = 200L;
-    CarRequest carRequest= new CarRequest();
+    CarRequest carRequest = new CarRequest();
     carRequest.setUserId(2L);
-    CarBrand carBrand= new CarBrand();
+    CarBrand carBrand = new CarBrand();
     carBrand.setBrandName(BRAND_NAME);
     carRequest.setCarBrand(carBrand);
     carRequest.setRegistrationNumber(REGISTRATIONNUMBER);
-    YearModel yearModel= new YearModel();
+    YearModel yearModel = new YearModel();
     yearModel.setYearModel(YEAR_MODEL);
     carRequest.setYearModel(yearModel);
     carRequest.setFuelType(BENSIN);
@@ -156,28 +160,29 @@ class TestCarController {
     CarBrand carBrand1 = new CarBrand();
     carBrand1.setBrandName(BRAND_NAME);
     carUpdated.setCarBrand(carBrand1);
-    YearModel yearModel1= new YearModel();
+    YearModel yearModel1 = new YearModel();
     yearModel1.setYearModel(YEAR_MODEL);
     carUpdated.setYearModel(yearModel1);
 
     //When
-    var response= underTest.updateCar(carRequest);
+    var response = underTest.updateCar(carRequest);
 
     //Then
-   Mockito.verify(carService,Mockito.times(1)).updateCar(eq(carUpdated),eq(carRequest.getUserId()));
-   assertEquals(200,response.getStatusCodeValue());
+    Mockito.verify(carService, Mockito.times(1)).updateCar(eq(carUpdated), eq(carRequest.getUserId()));
+    assertEquals(200, response.getStatusCodeValue());
   }
- @DisplayName("Should return ResponsEntity.ok when car deleted")
+
+  @DisplayName("Should return ResponsEntity.ok when car deleted")
   @Test
   void deleteCar() {
     //Given
     Long userId = 200L;
 
     //When
-    var response= underTest.deleteCar(REGISTRATIONNUMBER,userId);
+    var response = underTest.deleteCar(REGISTRATIONNUMBER, userId);
 
     //Then
-   Mockito.verify(carService,Mockito.times(1)).deleteCarByRegistrationNumber(eq(REGISTRATIONNUMBER),eq(userId));
-   assertEquals(200,response.getStatusCodeValue());
+    Mockito.verify(carService, Mockito.times(1)).deleteCarByRegistrationNumber(eq(REGISTRATIONNUMBER), eq(userId));
+    assertEquals(200, response.getStatusCodeValue());
   }
 }

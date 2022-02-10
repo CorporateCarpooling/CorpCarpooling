@@ -11,11 +11,9 @@ import javax.persistence.*;
 @Table(name = "year")
 public class YearModelEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  private Long id;
 
-    private String yearModel;
-
-
+  private String yearModel;
 }

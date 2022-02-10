@@ -7,14 +7,4 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface CarBrandMapper {
-
-/*    CarBrandMapper INSTANCE = Mappers.getMapper(CarBrandMapper.class);
-
-    @Mapping(target = "id", source = "carBrand.id")
-    @Mapping(target = "brandName", source = "carBrand.brandName")
-    CarBrandEntity carBrandToCarBrandDto(CarBrand carBrand);
-
-    CarBrand dtoToCarBrand(CarBrandEntity carBrandEntity);
-
- */
 }
