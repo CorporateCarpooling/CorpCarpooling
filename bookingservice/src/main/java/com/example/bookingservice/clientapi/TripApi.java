@@ -5,6 +5,7 @@ import com.example.model.Passenger;
 import com.example.model.User;
 import com.example.request.CarPoolRequest;
 import com.example.request.JoinCarpoolRequest;
+import com.example.request.LeaveCarpoolRequest;
 import com.example.request.PassengerApproveRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
@@ -36,6 +37,25 @@ public class TripApi {
                 .bodyToMono(String.class);
         String response = postResponse.block();
     }
+
+    public void leaveATrip(long carpoolId, long userId) {
+        LeaveCarpoolRequest leaveCarpoolRequest = new LeaveCarpoolRequest();
+        leaveCarpoolRequest.setCarpoolId(carpoolId);
+        leaveCarpoolRequest.setUserId(userId);
+
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+
+        Mono<String> postResponse = webClient.delete()
+                .uri(uriBuilder -> uriBuilder
+                        .path("leave/trip")
+                        .queryParam("carpoolId", carpoolId)
+                        .queryParam("userId", userId)
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class);
+        String response = postResponse.block();
+    }
+
     public Optional<Carpool> getCarPoolById(Long carpoolId) {
         WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
