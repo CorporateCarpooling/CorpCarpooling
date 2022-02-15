@@ -2,7 +2,6 @@ package com.example.mariadbservice.controller;
 
 import com.example.mariadbservice.service.TripService;
 import com.example.request.JoinCarpoolRequest;
-import com.example.request.LeaveCarpoolRequest;
 import com.example.request.PassengerApproveRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 public class TripController {
-  private TripService tripService;
+    private TripService tripService;
 
     @PostMapping("join/trip")
     public ResponseEntity<String> JoinATrip(@RequestBody JoinCarpoolRequest joinCarpoolRequest) {
