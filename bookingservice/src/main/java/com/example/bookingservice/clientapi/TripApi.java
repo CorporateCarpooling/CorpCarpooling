@@ -5,6 +5,7 @@ import com.example.model.Passenger;
 import com.example.model.User;
 import com.example.request.CarPoolRequest;
 import com.example.request.JoinCarpoolRequest;
+import com.example.request.LeaveCarpoolRequest;
 import com.example.request.PassengerApproveRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
@@ -27,18 +28,36 @@ public class TripApi {
 
     WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
-    Mono<String> postResponse = webClient.post()
-        .uri(uriBuilder -> uriBuilder
-            .path("/join/trip")
-            .build())
-        .bodyValue(joinCarpoolRequest)
-        .retrieve()
-        .bodyToMono(String.class);
-    String response = postResponse.block();
-  }
+        Mono<String> postResponse = webClient.post()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/join/trip")
+                        .build())
+                .bodyValue(joinCarpoolRequest)
+                .retrieve()
+                .bodyToMono(String.class);
+        String response = postResponse.block();
+    }
 
-  public Optional<Carpool> getCarPoolById(Long carpoolId) {
-    WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+    public void leaveATrip(long carpoolId, long userId) {
+        LeaveCarpoolRequest leaveCarpoolRequest = new LeaveCarpoolRequest();
+        leaveCarpoolRequest.setCarpoolId(carpoolId);
+        leaveCarpoolRequest.setUserId(userId);
+
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+
+        Mono<String> postResponse = webClient.delete()
+                .uri(uriBuilder -> uriBuilder
+                        .path("leave/trip")
+                        .queryParam("carpoolId", carpoolId)
+                        .queryParam("userId", userId)
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class);
+        String response = postResponse.block();
+    }
+
+    public Optional<Carpool> getCarPoolById(Long carpoolId) {
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
     Mono<Carpool> carpoolInDatabase = webClient.get()
         .uri(uriBuilder -> uriBuilder
@@ -53,29 +72,29 @@ public class TripApi {
   public Optional<Passenger> getPassengersById(Long passengerId) {
     WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
-    Mono<Passenger> passengerInDatabase = webClient.get()
-        .uri(uriBuilder -> uriBuilder
-            .path("passenger/getpassenger")
-            .queryParam("passengerId", passengerId)
-            .build())
-        .retrieve()
-        .bodyToMono(Passenger.class);
-    return Optional.ofNullable(passengerInDatabase.block());
-  }
+        Mono<Passenger> passengerInDatabase = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("passenger/getpassenger")
+                        .queryParam("passengerId", passengerId)
+                        .build())
+                .retrieve()
+                .bodyToMono(Passenger.class);
+        return Optional.ofNullable(passengerInDatabase.block());
+    }
 
-  public void approvePassenger(Long passengerId) {
-    PassengerApproveRequest passengerApproveRequest = new PassengerApproveRequest();
-    passengerApproveRequest.setPassengerId(passengerId);
+    public void approvePassenger(Long passengerId) {
+        PassengerApproveRequest passengerApproveRequest= new PassengerApproveRequest();
+        passengerApproveRequest.setPassengerId(passengerId);
 
-    WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
-    Mono<String> postResponse = webClient.post()
-        .uri(uriBuilder -> uriBuilder
-            .path("/passenger/approve")
-            .build())
-        .bodyValue(passengerApproveRequest)
-        .retrieve()
-        .bodyToMono(String.class);
-    String response = postResponse.block();
-  }
+        Mono<String> postResponse = webClient.post()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/passenger/approve")
+                        .build())
+                .bodyValue(passengerApproveRequest)
+                .retrieve()
+                .bodyToMono(String.class);
+        String response = postResponse.block();
+    }
 }
