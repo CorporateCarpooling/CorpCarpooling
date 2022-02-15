@@ -7,8 +7,8 @@ import javax.validation.constraints.Email;
 @Data
 public class RegisterUserRequest {
 
-    private String name;
-    @Email
-    private String email;
-    private String password;
+  private String name;
+  @Email
+  private String email;
+  private String password;
 }

@@ -17,52 +17,52 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CarPoolService {
 
-    private CarpPoolApi carpPoolApi;
-    private CarPoolMapper carPoolMapper;
-    private CarDataApi carDataApi;
+  private CarpPoolApi carpPoolApi;
+  private CarPoolMapper carPoolMapper;
+  private CarDataApi carDataApi;
 
-    public void registerRoute(Carpool carpool, String registrationNumber, Long userId) {
-        CarPoolRequest carPoolRequest = carPoolMapper.carPoolToCarPoolRequest(carpool);
-        Optional<Car> carOptional = carDataApi.getCarByRegistrationNumber(registrationNumber, userId);
+  public void registerRoute(Carpool carpool, String registrationNumber, Long userId) {
+    CarPoolRequest carPoolRequest = carPoolMapper.carPoolToCarPoolRequest(carpool);
+    Optional<Car> carOptional = carDataApi.getCarByRegistrationNumber(registrationNumber, userId);
 
-        if (!carOptional.isPresent()) {
-            throw new RuntimeException("Car does not exist");
-        } else {
-            carPoolRequest.setCarId(carOptional.get().getId());
-            carPoolRequest.setDriverUserId(userId);
-            carpPoolApi.postRoute(carPoolRequest);
-        }
+    if (!carOptional.isPresent()) {
+      throw new RuntimeException("Car does not exist");
+    } else {
+      carPoolRequest.setCarId(carOptional.get().getId());
+      carPoolRequest.setDriverUserId(userId);
+      carpPoolApi.postRoute(carPoolRequest);
+    }
+  }
+
+  public List<Carpool> getCarPools(String earliestDepartureTimeLocalDateTime, String latestDepartureTimeLocalDateTime) {
+    List<Carpool> carpoolsInDataBase = carpPoolApi.getCarPoolByDate(earliestDepartureTimeLocalDateTime, latestDepartureTimeLocalDateTime);
+    return carpoolsInDataBase;
+  }
+
+  private Carpool getCarpoolById(Long carpoolId) {
+    Optional<Carpool> carpoolIndataBase = carpPoolApi.getCarPoolById(carpoolId);
+    if (carpoolIndataBase.isEmpty()) {
+      throw new RuntimeException("There is no carpool");
+    }
+    return carpoolIndataBase.get();
+  }
+
+  public void deleteCarpool(Long carpoolId, Long driverId) {
+
+    Carpool carpool = getCarpoolById(carpoolId);
+    if (carpool.getDriverId().longValue() != driverId.longValue()) {
+      throw new RuntimeException("Not your carpool");
     }
 
-    public List<Carpool> getCarPools(String earliestDepartureTimeLocalDateTime, String latestDepartureTimeLocalDateTime) {
-        List<Carpool> carpoolsInDataBase = carpPoolApi.getCarPoolByDate(earliestDepartureTimeLocalDateTime, latestDepartureTimeLocalDateTime);
-        return carpoolsInDataBase;
+    boolean anyApprovedPassenger = isAnyPassengerApproved(carpool);
+    if (anyApprovedPassenger) {
+      throw new RuntimeException("you can't remove carpool. please contact passengers");
     }
 
-    private Carpool getCarpoolById(Long carpoolId) {
-        Optional<Carpool> carpoolIndataBase = carpPoolApi.getCarPoolById(carpoolId);
-        if (carpoolIndataBase.isEmpty()) {
-            throw new RuntimeException("There is no carpool");
-        }
-        return carpoolIndataBase.get();
-    }
+    carpPoolApi.deleteCarpoolById(carpoolId);
+  }
 
-    public void deleteCarpool(Long carpoolId, Long driverId) {
-
-        Carpool carpool = getCarpoolById(carpoolId);
-        if (carpool.getDriverId().longValue() != driverId.longValue()) {
-            throw new RuntimeException("Not your carpool");
-        }
-
-        boolean anyApprovedPassenger = isAnyPassengerApproved(carpool);
-        if (anyApprovedPassenger) {
-            throw new RuntimeException("you can't remove carpool. please contact passengers");
-        }
-
-        carpPoolApi.deleteCarpoolById(carpoolId);
-    }
-
-    private boolean isAnyPassengerApproved(Carpool carpool) {
-        return carpool.getPassengers().stream().anyMatch(Passenger::getApproved);
-    }
+  private boolean isAnyPassengerApproved(Carpool carpool) {
+    return carpool.getPassengers().stream().anyMatch(Passenger::getApproved);
+  }
 }

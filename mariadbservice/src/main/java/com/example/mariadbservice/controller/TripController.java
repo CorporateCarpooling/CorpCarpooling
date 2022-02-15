@@ -12,19 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 public class TripController {
-    private TripService tripService;
+  private TripService tripService;
 
-    @PostMapping("join/trip")
-    public ResponseEntity<String>JoinATrip(@RequestBody JoinCarpoolRequest joinCarpoolRequest){
-        Long id = tripService.join(joinCarpoolRequest.getCarpoolId(), joinCarpoolRequest.getUserId());
-        return ResponseEntity.ok(Long.toString(id));
-    }
+  @PostMapping("join/trip")
+  public ResponseEntity<String> JoinATrip(@RequestBody JoinCarpoolRequest joinCarpoolRequest) {
+    Long id = tripService.join(joinCarpoolRequest.getCarpoolId(), joinCarpoolRequest.getUserId());
+    return ResponseEntity.ok(Long.toString(id));
+  }
 
-    @PostMapping("passenger/approve")
-    public ResponseEntity<String> JoinATrip(@RequestBody PassengerApproveRequest passengerApproveRequest){
-        Long id = tripService.approvePassenger(passengerApproveRequest.getPassengerId());
-        return ResponseEntity.ok(Long.toString(id));
-    }
-
-
+  @PostMapping("passenger/approve")
+  public ResponseEntity<String> JoinATrip(@RequestBody PassengerApproveRequest passengerApproveRequest) {
+    Long id = tripService.approvePassenger(passengerApproveRequest.getPassengerId());
+    return ResponseEntity.ok(Long.toString(id));
+  }
 }

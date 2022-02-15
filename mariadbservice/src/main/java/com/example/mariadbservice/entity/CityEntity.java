@@ -11,9 +11,9 @@ import javax.persistence.*;
 @Table(name = "city")
 public class CityEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
-    private String cityName;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  private Long id;
+  private String cityName;
 
 }

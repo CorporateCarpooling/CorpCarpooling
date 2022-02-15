@@ -14,22 +14,21 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class CarDataApi {
-    private final Environment environment;
+  private final Environment environment;
 
-    public Optional<Car> getCarByRegistrationNumber(String registrationNumber, Long userId) {
+  public Optional<Car> getCarByRegistrationNumber(String registrationNumber, Long userId) {
 
-        WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
+    WebClient webClient = WebClient.create(environment.getProperty("mariadbservice.host"));
 
-        Mono<Car> carInDatabase = webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/car")
-                        .queryParam("registrationNumber", registrationNumber)
-                        .queryParam("userId", userId)
-                        .build())
-                .retrieve()
-                .bodyToMono(Car.class);
+    Mono<Car> carInDatabase = webClient.get()
+        .uri(uriBuilder -> uriBuilder
+            .path("/car")
+            .queryParam("registrationNumber", registrationNumber)
+            .queryParam("userId", userId)
+            .build())
+        .retrieve()
+        .bodyToMono(Car.class);
 
-        return Optional.ofNullable(carInDatabase.block());
-    }
-
+    return Optional.ofNullable(carInDatabase.block());
+  }
 }

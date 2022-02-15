@@ -8,11 +8,11 @@ import lombok.Data;
 @Data
 public class CarRequest {
 
-    private Long userId;
-    private CarBrand carBrand;
-    private String registrationNumber;
-    private YearModel yearModel;
-    private String fuelType;
-    private int availableSeats;
+  private Long userId;
+  private CarBrand carBrand;
+  private String registrationNumber;
+  private YearModel yearModel;
+  private String fuelType;
+  private int availableSeats;
 
 }

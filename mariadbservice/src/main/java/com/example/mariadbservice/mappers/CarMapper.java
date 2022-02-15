@@ -11,15 +11,15 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CarMapper {
 
-    @Mapping(target = "id", source = "car.id")
-    @Mapping(target = "carBrand", source = "car.carBrand")
-    @Mapping(target = "yearModel", source = "car.yearModel")
-    @Mapping(target = "fuelType", source = "car.fuelType")
-    @Mapping(target = "availableSeats", source = "car.availableSeats")
-    CarEntity carToCarDto(Car car);
+  @Mapping(target = "id", source = "car.id")
+  @Mapping(target = "carBrand", source = "car.carBrand")
+  @Mapping(target = "yearModel", source = "car.yearModel")
+  @Mapping(target = "fuelType", source = "car.fuelType")
+  @Mapping(target = "availableSeats", source = "car.availableSeats")
+  CarEntity carToCarDto(Car car);
 
-    Car dtoToCar(CarEntity carEntity);
+  Car dtoToCar(CarEntity carEntity);
 
-    Car dtoToCar(CarRequest carRequest);
+  Car dtoToCar(CarRequest carRequest);
 
 }

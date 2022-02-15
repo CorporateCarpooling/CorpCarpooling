@@ -11,14 +11,14 @@ import javax.persistence.*;
 @Table(name = "route")
 public class RouteEntity {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+  @Id
+  @GeneratedValue
+  private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private LocationEntity startPoint;
+  @ManyToOne(fetch = FetchType.EAGER)
+  private LocationEntity startPoint;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private LocationEntity finishPoint;
+  @ManyToOne(fetch = FetchType.EAGER)
+  private LocationEntity finishPoint;
 
 }

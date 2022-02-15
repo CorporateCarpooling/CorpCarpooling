@@ -1,8 +1,6 @@
 package com.example.mariadbservice.entity;
 
-
 import com.example.model.FuelType;
-import com.example.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,23 +12,23 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "car")
 public class CarEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private CarBrandEntity carBrand;
+  @ManyToOne(fetch = FetchType.EAGER)
+  private CarBrandEntity carBrand;
 
-    private String registrationNumber;
+  private String registrationNumber;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private YearModelEntity yearModel;
+  @ManyToOne(fetch = FetchType.EAGER)
+  private YearModelEntity yearModel;
 
-    @Enumerated(EnumType.STRING)
-    private FuelType fuelType;
+  @Enumerated(EnumType.STRING)
+  private FuelType fuelType;
 
-    private int availableSeats;
+  private int availableSeats;
 
-    @ManyToOne
-    private UserEntity user;
+  @ManyToOne
+  private UserEntity user;
 }

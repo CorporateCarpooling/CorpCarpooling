@@ -1,10 +1,7 @@
 package com.example.mariadbservice.entity;
 
-import com.example.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,24 +12,24 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "carpool")
 public class CarpoolEntity {
-    @Id
-    @GeneratedValue
-    private Long id;
+  @Id
+  @GeneratedValue
+  private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private CarEntity car;
+  @OneToOne(fetch = FetchType.EAGER)
+  private CarEntity car;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private RouteEntity route;
+  @ManyToOne(fetch = FetchType.EAGER)
+  private RouteEntity route;
 
-    @OneToMany(mappedBy = "carpool", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PassengerEntity>passengers;
+  @OneToMany(mappedBy = "carpool", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<PassengerEntity> passengers;
 
-    private LocalDateTime departureTime;
+  private LocalDateTime departureTime;
 
-    private int availableSeatsForRide;
-    private double pricePerRide;
+  private int availableSeatsForRide;
+  private double pricePerRide;
 
-    @ManyToOne
-    private UserEntity driver;
+  @ManyToOne
+  private UserEntity driver;
 }

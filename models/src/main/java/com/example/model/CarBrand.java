@@ -5,8 +5,6 @@ import lombok.Data;
 @Data
 public class CarBrand {
 
-    private Long id;
-    private String brandName;
-
-
+  private Long id;
+  private String brandName;
 }

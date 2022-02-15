@@ -10,9 +10,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "role")
 public class RoleEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String name;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
+  private String name;
 
 }

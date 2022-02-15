@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class YearModel {
 
-    private Long id;
-    private String yearModel;
-
-
+  private Long id;
+  private String yearModel;
 }

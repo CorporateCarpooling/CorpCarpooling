@@ -84,6 +84,5 @@ class TestUserController {
         userUpdated.setPassword(PASSWORD);
 
         Mockito.verify(userService,Mockito.times(1)).updateCustomer(eq(userUpdated));
-
     }
 }

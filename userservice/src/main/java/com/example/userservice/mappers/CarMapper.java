@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface CarMapper {
-    Car dtoToCar(RegisterCarRequest registerCarRequest);
+  Car dtoToCar(RegisterCarRequest registerCarRequest);
 
-    CarRequest carToCarRequest(Car car);
+  CarRequest carToCarRequest(Car car);
 }

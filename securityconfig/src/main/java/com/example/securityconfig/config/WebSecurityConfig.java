@@ -21,45 +21,45 @@ import javax.annotation.Resource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Resource(name = "securityApi")
-    private UserDetailsService userDetailsService;
+  @Resource(name = "securityApi")
+  private UserDetailsService userDetailsService;
 
-    public UnauthorizedEntryPoint unauthorizedEntryPoint;
+  public UnauthorizedEntryPoint unauthorizedEntryPoint;
 
-     //It tells how to get the user and how to take care of the password
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
-    }
+  //It tells how to get the user and how to take care of the password
+  @Override
+  public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
+  }
 
-    @Bean
-    public BCryptPasswordEncoder encoder(){
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public BCryptPasswordEncoder encoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/user/login", "/user/register").permitAll()
-                //.usernameParameter("email")
-                .anyRequest().authenticated()
-                //.anyRequest().permitAll()
-                .and()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.cors().and().csrf().disable()
+        .authorizeRequests()
+        .antMatchers("/user/login", "/user/register").permitAll()
+        //.usernameParameter("email")
+        .anyRequest().authenticated()
+        //.anyRequest().permitAll()
+        .and()
+        .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint).and()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
-    }
+    http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+  }
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+  @Override
+  @Bean
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
 
-    @Bean
-    public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
-        return new JwtAuthenticationFilter();
-    }
+  @Bean
+  public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
+    return new JwtAuthenticationFilter();
+  }
 }
