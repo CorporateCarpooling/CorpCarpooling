@@ -57,6 +57,19 @@ public class TripService {
         }
     }
 
+    public void leave(Long carpoolId, Long userId) {
+        List<PassengerEntity> allPassengers = passengerRepository.findAll();
+
+        Optional<PassengerEntity> entity = allPassengers.stream().filter(passengerEntity -> Objects.equals(passengerEntity.getUser().getId(), userId) &&
+                Objects.equals(passengerEntity.getCarpool().getId(), carpoolId)).findFirst();
+
+        if (entity.isPresent()) {
+            passengerRepository.delete(entity.get());
+        } else {
+            throw new RuntimeException("Passenger not found.");
+        }
+    }
+
     public Long approvePassenger(Long passengerId) {
         Optional<PassengerEntity> passengerEntity = passengerRepository.findById(passengerId);
         if (passengerEntity.isPresent()) {
