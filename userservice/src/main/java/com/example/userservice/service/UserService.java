@@ -48,6 +48,10 @@ public class UserService {
   }
 
   public void deleteCustomer(String id) {
+    Optional<User> userInDatabase = dataApi.getUserById(id);
+    if (userInDatabase.isEmpty()) {
+      throw new RuntimeException("User does not exist");
+    }
     dataApi.deleteUser(id);
   }
 }
