@@ -32,5 +32,4 @@ public class TripController {
         tripService.approvePassengerRequest(passengerApproveRequest.getPassengerId(), Long.parseLong(principal.getName()));
         return ResponseEntity.ok("Passenger request approved");
     }
-
 }

@@ -9,7 +9,6 @@ import com.example.model.User;
 import com.example.mariadbservice.repository.RoleRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

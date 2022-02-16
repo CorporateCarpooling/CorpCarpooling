@@ -25,64 +25,65 @@ import static org.mockito.ArgumentMatchers.eq;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {UserMapperImpl.class, UserController.class})
 class TestUserController {
-    public static final String EMAIL = "my@mail.com";
-    public static final String NAME = "My Name";
-    public static final String PASSWORD = "myPassword";
+  public static final String EMAIL = "my@mail.com";
+  public static final String NAME = "My Name";
+  public static final String PASSWORD = "myPassword";
 
-    @Autowired
-    private UserController underTest;
-    @MockBean
-    private UserService userService;
-    @MockBean
-    private AuthenticationManager authenticationManager;
-    @MockBean
-    TokenProvider tokenProvider;
+  @Autowired
+  private UserController underTest;
+  @MockBean
+  private UserService userService;
+  @MockBean
+  private AuthenticationManager authenticationManager;
+  @MockBean
+  TokenProvider tokenProvider;
 
-    @Mock
-    Principal principal;
+  @Mock
+  Principal principal;
 
-    @DisplayName("Should return ResponsEntity.ok when registerd")
-    @Test
-    void test_registerUser() {
-        //Given
-        RegisterUserRequest registerUserRequest = new RegisterUserRequest();
-        registerUserRequest.setEmail(EMAIL);
-        registerUserRequest.setName(NAME);
-        registerUserRequest.setPassword(PASSWORD);
+  @DisplayName("Should return ResponsEntity.ok when registerd")
+  @Test
+  void test_registerUser() {
+    //Given
+    RegisterUserRequest registerUserRequest = new RegisterUserRequest();
+    registerUserRequest.setEmail(EMAIL);
+    registerUserRequest.setName(NAME);
+    registerUserRequest.setPassword(PASSWORD);
 
-        //When
-        var response = underTest.registerUser(registerUserRequest);
+    //When
+    var response = underTest.registerUser(registerUserRequest);
 
-        //Then
-        User expectedUser = new User();
-        expectedUser.setEmail(EMAIL);
-        expectedUser.setName(NAME);
-        expectedUser.setPassword(PASSWORD);
+    //Then
+    User expectedUser = new User();
+    expectedUser.setEmail(EMAIL);
+    expectedUser.setName(NAME);
+    expectedUser.setPassword(PASSWORD);
 
-        Mockito.verify(userService, Mockito.times(1)).registerCustomer(eq(expectedUser));
-        assertEquals(200,response.getStatusCodeValue());
+    Mockito.verify(userService, Mockito.times(1)).registerCustomer(eq(expectedUser));
+    assertEquals(200, response.getStatusCodeValue());
 
-    }
-    @Test
-    void test_updateUser(){
-        //Given
-        UpdateUserRequest updateUserRequest= new UpdateUserRequest();
-        updateUserRequest.setEmail(EMAIL);
-        updateUserRequest.setName(NAME);
-        updateUserRequest.setPassword(PASSWORD);
+  }
 
-        Mockito.when(principal.getName()).thenReturn("3005");
+  @Test
+  void test_updateUser() {
+    //Given
+    UpdateUserRequest updateUserRequest = new UpdateUserRequest();
+    updateUserRequest.setEmail(EMAIL);
+    updateUserRequest.setName(NAME);
+    updateUserRequest.setPassword(PASSWORD);
 
-        //when
-        var response = underTest.updateUser(principal, updateUserRequest);
+    Mockito.when(principal.getName()).thenReturn("3005");
 
-        //Then
-        User userUpdated= new User();
-        userUpdated.setId(3005L);
-        userUpdated.setName(NAME);
-        userUpdated.setEmail(EMAIL);
-        userUpdated.setPassword(PASSWORD);
+    //when
+    var response = underTest.updateUser(principal, updateUserRequest);
 
-        Mockito.verify(userService,Mockito.times(1)).updateCustomer(eq(userUpdated));
-    }
+    //Then
+    User userUpdated = new User();
+    userUpdated.setId(3005L);
+    userUpdated.setName(NAME);
+    userUpdated.setEmail(EMAIL);
+    userUpdated.setPassword(PASSWORD);
+
+    Mockito.verify(userService, Mockito.times(1)).updateCustomer(eq(userUpdated));
+  }
 }

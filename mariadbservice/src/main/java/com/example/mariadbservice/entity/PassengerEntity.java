@@ -20,6 +20,5 @@ public class PassengerEntity {
   private CarpoolEntity carpool;
 
   private Boolean approved;
-
 }
 

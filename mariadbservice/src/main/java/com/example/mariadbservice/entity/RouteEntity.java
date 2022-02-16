@@ -20,5 +20,4 @@ public class RouteEntity {
 
   @ManyToOne(fetch = FetchType.EAGER)
   private LocationEntity finishPoint;
-
 }

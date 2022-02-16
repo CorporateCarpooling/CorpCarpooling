@@ -41,7 +41,6 @@ public class UserService {
     userInDatabase.setEmail(user.getEmail());
     userInDatabase.setName(user.getName());
     userInDatabase.setPassword(user.getPassword());
-//        userInDatabase.setRoles(userMapper.listOfEnumToListOfEntity(user.getRoles()));
     userRepository.save(userInDatabase);
 
   }

@@ -25,5 +25,4 @@ public abstract class PassengerMapper {
   @Mapping(target = "userId", source = "passengerEntity.user.id")
   @Mapping(target = "carpoolId", source = "passengerEntity.carpool.id")
   public abstract Passenger dtoToPassenger(PassengerEntity passengerEntity);
-
 }

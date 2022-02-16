@@ -21,5 +21,4 @@ public interface CarMapper {
   Car dtoToCar(CarEntity carEntity);
 
   Car dtoToCar(CarRequest carRequest);
-
 }

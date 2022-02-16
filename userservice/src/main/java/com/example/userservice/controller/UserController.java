@@ -8,7 +8,6 @@ import com.example.userservice.model.AuthToken;
 import com.example.userservice.model.LoginUser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,9 +27,7 @@ public class UserController {
 
   private UserService userService;
   private final UserMapper userMapper;
-
   private TokenProvider tokenProvider;
-
   private AuthenticationManager authenticationManager;
 
   @PostMapping("/user/register")
@@ -84,5 +81,4 @@ public class UserController {
   public ResponseEntity<String> ping() {
     return ResponseEntity.ok("pong");
   }
-
 }
